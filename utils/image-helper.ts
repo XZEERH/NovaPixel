@@ -1,7 +1,16 @@
-export const getImageDimensions = (file: File): Promise<{w: number, h: number}> => {
+/**
+ * Mendapatkan resolusi gambar
+ */
+export const getImageResolution = (file: File): Promise<string> => {
   return new Promise((resolve) => {
-    const img = new Image();
-    img.src = URL.createObjectURL(file);
-    img.onload = () => resolve({ w: img.width, h: img.height });
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        resolve(`${img.width} x ${img.height}`);
+      };
+      img.src = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
   });
 };
