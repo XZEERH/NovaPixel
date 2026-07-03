@@ -1,5 +1,8 @@
+// types/global.ts
+
 /**
- * Status proses AI dari awal hingga selesai
+ * Mendefinisikan status proses AI secara global.
+ * Kita samakan AppStep dengan ProcessStatus agar tidak terjadi error import.
  */
 export type ProcessStatus = 
   | 'idle' 
@@ -10,24 +13,18 @@ export type ProcessStatus =
   | 'completed' 
   | 'error';
 
-/**
- * Tema aplikasi
- */
+// Alias untuk kompatibilitas komponen lama
+export type AppStep = ProcessStatus;
+
 export type ThemeMode = 'dark';
 
-/**
- * Struktur data untuk navigasi
- */
-export interface NavLink {
-  name: string;
-  href: string;
-  icon?: React.ComponentType<{ size?: number; className?: string }>;
-}
-
-/**
- * Struktur data untuk step progress
- */
 export interface StepDetail {
   label: string;
   progress: number;
+}
+
+export interface NavLink {
+  name: string;
+  href: string;
+  icon?: any;
 }
