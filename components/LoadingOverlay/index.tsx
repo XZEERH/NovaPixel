@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { CustomProgress } from "../Progress/CustomProgress";
-import { AppStep } from "@/types/global";
+import { AppStep } from "@/types/global"; // <--- Pastikan alias @/ mengarah ke root
 
 export const LoadingOverlay = ({ step }: { step: AppStep }) => (
   <motion.div 
@@ -11,7 +11,7 @@ export const LoadingOverlay = ({ step }: { step: AppStep }) => (
   >
     <div className="max-w-md w-full">
       <CustomProgress status={step} />
-      <p className="text-center mt-6 text-purple-400 animate-pulse font-medium tracking-widest uppercase text-xs">
+      <p className="text-center mt-6 text-purple-400 animate-pulse font-medium tracking-widest uppercase text-[10px]">
         Don't close this tab while AI is working...
       </p>
     </div>
