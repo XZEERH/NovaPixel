@@ -1,11 +1,20 @@
+"use client";
 import { motion } from 'framer-motion';
+import { ReactNode } from 'react';
 
-export const GlassCard = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
+interface GlassCardProps {
+  children: ReactNode;
+  className?: string;
+}
+
+const GlassCard = ({ children, className = "" }: GlassCardProps) => (
   <motion.div 
-    initial={{ opacity: 0, scale: 0.95 }}
-    animate={{ opacity: 1, scale: 1 }}
-    className={`bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 ${className}`}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    className={`bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 ${className}`}
   >
     {children}
   </motion.div>
 );
+
+export default GlassCard; // Gunakan default export
