@@ -1,16 +1,8 @@
+export type ProcessStatus = 'idle' | 'uploading' | 'preparing' | 'enhancing' | 'rendering' | 'completed' | 'error';
+
 export interface AIResponse {
   status: boolean;
   result?: string;
-  url?: string; // Menangani variasi response API
+  url?: string;
   message?: string;
-}
-
-export type ProcessStatus = 'idle' | 'uploading' | 'processing' | 'done' | 'error';
-
-export interface FeatureProps {
-  title: string;
-  desc: string;
-  icon: any;
-  link: string;
-  status: 'active' | 'soon';
 }
