@@ -1,6 +1,7 @@
 "use client";
+import React from 'react';
 import { useEnhancer } from '@/hooks/useEnhancer';
-import { GlassCard } from '@/components/UI/GlassCard';
+import GlassCard from '@/components/UI/GlassCard'; // HAPUS KURUNG KURAWAL
 import { CustomProgress } from '@/components/Progress/CustomProgress';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
 import { Upload, Download, RefreshCw, Wand2 } from 'lucide-react';
@@ -16,7 +17,7 @@ export default function ImageHDPage() {
     <div className="min-h-screen pt-32 px-6 container mx-auto pb-20">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Image <span className="text-purple-500">Enhancer</span></h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">Image <span className="text-purple-500">Enhancer</span></h1>
           <p className="text-gray-400">Transform low-res images into 4K masterpieces instantly.</p>
         </div>
 
@@ -26,7 +27,7 @@ export default function ImageHDPage() {
               <Upload size={48} className="text-purple-500" />
             </div>
             <input type="file" id="img-up" hidden accept="image/*" onChange={onFileChange} />
-            <label htmlFor="img-up" className="bg-purple-600 hover:bg-purple-700 px-10 py-4 rounded-2xl font-bold cursor-pointer transition-all">
+            <label htmlFor="img-up" className="bg-purple-600 hover:bg-purple-700 px-10 py-4 rounded-2xl font-bold cursor-pointer transition-all text-white">
               Choose Image
             </label>
           </GlassCard>
@@ -49,21 +50,14 @@ export default function ImageHDPage() {
               />
             </GlassCard>
             <div className="flex justify-center gap-4">
-              <button onClick={() => window.location.reload()} className="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-8 py-4 rounded-2xl transition-all">
+              <button onClick={() => window.location.reload()} className="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-8 py-4 rounded-2xl transition-all text-white">
                 <RefreshCw size={20} /> Try New
               </button>
-              <a href={resultUrl} target="_blank" download className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 px-10 py-4 rounded-2xl font-bold transition-all shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+              <a href={resultUrl} target="_blank" download className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 px-10 py-4 rounded-2xl font-bold transition-all shadow-[0_0_20px_rgba(168,85,247,0.4)] text-white">
                 <Download size={20} /> Download HD
               </a>
             </div>
           </div>
-        )}
-
-        {status === 'error' && (
-          <GlassCard className="text-center py-20">
-            <p className="text-red-400 mb-6 font-medium">Failed to process image. Please try again.</p>
-            <button onClick={() => window.location.reload()} className="bg-white/10 px-8 py-3 rounded-xl">Retry</button>
-          </GlassCard>
         )}
       </div>
     </div>
