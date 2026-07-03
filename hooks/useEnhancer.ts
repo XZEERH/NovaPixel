@@ -1,7 +1,9 @@
+"use client";
+
 import { useState } from 'react';
-import { put } from '@vercel/blob';
+import { upload } from '@vercel/blob/client'; // Menggunakan 'upload' dari client package
 import { processMedia } from '@/services/api-service';
-import { ProcessStatus } from '@/types';
+import { ProcessStatus } from '@/types/global';
 
 export const useEnhancer = (type: 'image' | 'video') => {
   const [status, setStatus] = useState<ProcessStatus>('idle');
@@ -11,19 +13,27 @@ export const useEnhancer = (type: 'image' | 'video') => {
   const startProcessing = async (file: File) => {
     try {
       setStatus('uploading');
-      const blob = await put(file.name, file, { access: 'public', handleUploadUrl: '/api/upload' });
+      
+      // Gunakan fungsi upload (bukan put) untuk client-side
+      const blob = await upload(file.name, file, { 
+        access: 'public', 
+        handleUploadUrl: '/api/upload' 
+      });
+      
       setOriginalUrl(blob.url);
 
       setStatus('preparing');
-      setStatus('enhancing');
+      // Simulasi delay engine
+      await new Promise(r => setTimeout(r, 1000));
       
+      setStatus('enhancing');
       const enhanced = await processMedia(blob.url, type);
       
       setStatus('rendering');
       setResultUrl(enhanced);
       setStatus('completed');
     } catch (error) {
-      console.error(error);
+      console.error("Enhancement Error:", error);
       setStatus('error');
     }
   };
