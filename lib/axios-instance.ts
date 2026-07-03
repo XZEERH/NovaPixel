@@ -1,7 +1,3 @@
 import axios from 'axios';
-
-const apiClient = axios.create({
-  timeout: 120000, // API AI biasanya lama, set 2 menit
-});
-
+const apiClient = axios.create({ timeout: 300000 }); // 5 Menit
 export default apiClient;
