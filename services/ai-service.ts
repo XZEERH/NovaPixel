@@ -1,16 +1,17 @@
-import apiClient from '@/lib/axios-instance';
-import { API_ENDPOINTS } from '@/constants/config';
+import axios from 'axios';
 
-export const enhanceImage = async (imageUrl: string) => {
-  const response = await apiClient.get(API_ENDPOINTS.IMAGE_HD, {
-    params: { url: imageUrl }
+export const enhanceMedia = async (url: string, type: 'image' | 'video'): Promise<string> => {
+  const response = await axios.get('/api/enhance', {
+    params: { url, type }
   });
-  return response.data.result || response.data.url;
-};
+  
+  if (response.data.status === false) {
+    throw new Error(response.data.message || 'Processing failed');
+  }
 
-export const enhanceVideo = async (videoUrl: string) => {
-  const response = await apiClient.get(API_ENDPOINTS.VIDEO_HD, {
-    params: { url: videoUrl }
-  });
-  return response.data.result || response.data.url;
+  // Ambil URL hasil dari berbagai kemungkinan field response
+  const resultUrl = response.data.result || response.data.url;
+  if (!resultUrl) throw new Error('No result URL received');
+  
+  return resultUrl;
 };
