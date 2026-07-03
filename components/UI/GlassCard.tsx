@@ -17,4 +17,4 @@ const GlassCard = ({ children, className = "" }: GlassCardProps) => (
   </motion.div>
 );
 
-export default GlassCard; // Export Default
+export default GlassCard; // WAJIB DEFAULT EXPORT
