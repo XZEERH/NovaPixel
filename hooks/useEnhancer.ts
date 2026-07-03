@@ -1,34 +1,32 @@
 import { useState } from 'react';
-import { uploadFile } from '@/services/upload-service';
+import { put } from '@vercel/blob';
+import { processMedia } from '@/services/api-service';
+import { ProcessStatus } from '@/types';
 
-export const useEnhancer = (enhanceFn: (url: string) => Promise<string>) => {
-  const [status, setStatus] = useState<'idle' | 'processing' | 'done' | 'error'>('idle');
-  const [step, setStep] = useState(0);
-  const [result, setResult] = useState<string | null>(null);
-  const [original, setOriginal] = useState<string | null>(null);
+export const useEnhancer = (type: 'image' | 'video') => {
+  const [status, setStatus] = useState<ProcessStatus>('idle');
+  const [originalUrl, setOriginalUrl] = useState<string | null>(null);
+  const [resultUrl, setResultUrl] = useState<string | null>(null);
 
-  const processFile = async (file: File) => {
+  const startProcessing = async (file: File) => {
     try {
-      setStatus('processing');
-      setStep(10); // Uploading
+      setStatus('uploading');
+      const blob = await put(file.name, file, { access: 'public', handleUploadUrl: '/api/upload' });
+      setOriginalUrl(blob.url);
+
+      setStatus('preparing');
+      setStatus('enhancing');
       
-      const publicUrl = await uploadFile(file);
-      setOriginal(publicUrl);
-      setStep(30); // Preparing
+      const enhanced = await processMedia(blob.url, type);
       
-      setStep(50); // Enhancing
-      const enhancedUrl = await enhanceFn(publicUrl);
-      
-      setStep(80); // Rendering
-      setResult(enhancedUrl);
-      
-      setStep(100); // Completed
-      setStatus('done');
+      setStatus('rendering');
+      setResultUrl(enhanced);
+      setStatus('completed');
     } catch (error) {
       console.error(error);
       setStatus('error');
     }
   };
 
-  return { status, step, result, original, processFile };
+  return { status, originalUrl, resultUrl, startProcessing };
 };
