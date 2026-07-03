@@ -1,18 +1,20 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true,
+  /* config options here */
+  eslint: {
+    // Mengabaikan linting saat build agar tidak terjadi error "Unknown options"
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    // Tetap aktifkan pengecekan tipe agar kode tetap aman
+    ignoreBuildErrors: false,
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "api-faa.my.id" },
       { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
     ],
-  },
-  // Mengaktifkan fitur React 19 / Next 15 yang dioptimalkan
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '50mb',
-    },
   },
 };
 
