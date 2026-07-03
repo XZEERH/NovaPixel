@@ -3,10 +3,12 @@ export const API_ENDPOINTS = {
   VIDEO_HD: 'https://api-faa.my.id/faa/hdvid',
 };
 
-export const PROCESSING_STEPS = [
-  { id: 'uploading', label: 'Uploading...', weight: 20 },
-  { id: 'preparing', label: 'Preparing AI...', weight: 40 },
-  { id: 'enhancing', label: 'Enhancing...', weight: 70 },
-  { id: 'rendering', label: 'Rendering...', weight: 90 },
-  { id: 'completed', label: 'Completed', weight: 100 },
-];
+export const STEPS: Record<ProcessStatus, { label: string; progress: number }> = {
+  idle: { label: 'Ready', progress: 0 },
+  uploading: { label: 'Uploading File...', progress: 20 },
+  preparing: { label: 'Preparing AI Engine...', progress: 40 },
+  enhancing: { label: 'Enhancing Pixels...', progress: 70 },
+  rendering: { label: 'Rendering Final Output...', progress: 90 },
+  completed: { label: 'Task Completed', progress: 100 },
+  error: { label: 'Error Occurred', progress: 0 },
+};
