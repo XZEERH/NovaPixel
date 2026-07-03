@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@vercel/blob": "^0.24.1",
-    "axios": "^1.7.7",
+    "@vercel/blob": "^0.27.1",
+    "axios": "^1.7.9",
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.11",
     "lucide-react": "^0.454.0",
