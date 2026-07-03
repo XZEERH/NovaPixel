@@ -1,0 +1,11 @@
+{
+  "github": {
+    "silent": true
+  },
+  "regions": ["sin1"],
+  "functions": {
+    "app/api/**/*": {
+      "maxDuration": 300
+    }
+  }
+}
