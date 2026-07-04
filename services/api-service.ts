@@ -1,25 +1,33 @@
-import apiClient from '@/lib/axios-instance';
+import axios from 'axios';
 import { ApiResponse } from '@/types/api';
 
+const API_ENDPOINTS = {
+  IMAGE_HD: 'https://api-faa.my.id/faa/hdv2',
+  VIDEO_HD: 'https://api-faa.my.id/faa/hdvid',
+};
+
 export const processMedia = async (url: string, type: 'image' | 'video'): Promise<string> => {
+  const endpoint = type === 'video' ? API_ENDPOINTS.VIDEO_HD : API_ENDPOINTS.IMAGE_HD;
+
   try {
-    const { data } = await apiClient.get<ApiResponse>(`/api/proxy`, {
-      params: { url, type },
-      // Menunggu hingga 5 menit karena proses video AI sangat lama
-      timeout: 300000 
+    const { data } = await axios.get<ApiResponse>(endpoint, {
+      params: { url },
+      timeout: 600000, // 10 menit — tidak ada batas Vercel
     });
-    
-    // API FAA terkadang mengembalikan .result atau .url
+
     const finalUrl = data.result || data.url;
-    
+
     if (!finalUrl) {
-      console.error("API Response Data:", data);
-      throw new Error(data.message || "AI Engine did not provide a result URL");
+      console.error('API FAA Response:', data);
+      throw new Error(data.message || 'AI tidak mengembalikan hasil. Coba file lain.');
     }
-    
+
     return finalUrl;
   } catch (error: any) {
-    const errorMsg = error.response?.data?.message || error.message || "Unknown AI Proxy Error";
-    throw new Error(errorMsg);
+    if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
+      throw new Error('Proses AI timeout. File terlalu besar atau server sedang sibuk, coba lagi.');
+    }
+    const msg = error.response?.data?.message || error.message || 'Gagal menghubungi AI server';
+    throw new Error(msg);
   }
 };
