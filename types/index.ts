@@ -1,4 +1,5 @@
-export type ProcessStatus = 'idle' | 'uploading' | 'preparing' | 'enhancing' | 'rendering' | 'completed' | 'error';
+// Re-export dari global.ts agar tidak ada duplicate type definition
+export type { ProcessStatus, AppStep } from './global';
 
 export interface AIResponse {
   status: boolean;
