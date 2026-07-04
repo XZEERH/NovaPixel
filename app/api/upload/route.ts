@@ -9,19 +9,25 @@ export async function POST(request: Request): Promise<NextResponse> {
       body,
       request,
       onBeforeGenerateToken: async (pathname) => {
-        // Logika otentikasi sederhana bisa diletakkan di sini jika perlu
+        // Di sini Anda bisa membatasi siapa yang boleh upload
         return {
-          allowedContentTypes: ['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'video/quicktime'],
+          allowedContentTypes: [
+            'image/jpeg', 'image/png', 'image/webp', 
+            'video/mp4', 'video/quicktime', 'video/x-matroska'
+          ],
           tokenPayload: JSON.stringify({}),
         };
       },
       onUploadCompleted: async ({ blob, tokenPayload }) => {
-        console.log('Upload finished:', blob.url);
+        console.log('Vercel Blob upload completed:', blob.url);
       },
     });
 
     return NextResponse.json(jsonResponse);
   } catch (error) {
-    return NextResponse.json({ error: (error as Error).message }, { status: 400 });
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 400 }
+    );
   }
 }
