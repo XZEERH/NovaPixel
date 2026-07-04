@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { put } from '@vercel/blob';
+import { upload } from '@vercel/blob/client';
 
 export const useUpload = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -7,7 +7,10 @@ export const useUpload = () => {
   const uploadToBlob = async (file: File) => {
     setIsUploading(true);
     try {
-      const blob = await put(file.name, file, { access: 'public' });
+      const blob = await upload(file.name, file, {
+        access: 'public',
+        handleUploadUrl: '/api/upload',
+      });
       return blob.url;
     } finally {
       setIsUploading(false);
