@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'edge';
-export const maxDuration = 300; // 5 menit
-
-const API_ENDPOINTS = {
-  IMAGE_HD: 'https://api-faa.my.id/faa/hdv2',
-  VIDEO_HD: 'https://api-faa.my.id/faa/hdvid',
-};
+export const maxDuration = 60;
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -17,16 +12,22 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ status: false, message: 'URL required' }, { status: 400 });
   }
 
-  const endpoint = type === 'video' ? API_ENDPOINTS.VIDEO_HD : API_ENDPOINTS.IMAGE_HD;
+  // Video belum tersedia
+  if (type === 'video') {
+    return NextResponse.json(
+      { status: false, message: 'Video HD coming soon' },
+      { status: 501 }
+    );
+  }
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 290000); // 4 menit 50 detik
+    const timeoutId = setTimeout(() => controller.abort(), 55000);
 
-    const response = await fetch(`${endpoint}?url=${encodeURIComponent(url)}`, {
-      signal: controller.signal,
-      headers: { 'User-Agent': 'NovaPixel/1.0' },
-    });
+    const response = await fetch(
+      `https://api.siputzx.my.id/api/tools/upscale?url=${encodeURIComponent(url)}`,
+      { signal: controller.signal }
+    );
 
     clearTimeout(timeoutId);
 
@@ -38,11 +39,13 @@ export async function GET(req: NextRequest) {
     }
 
     const data = await response.json();
-    const finalUrl = data.result || data.url;
+
+    // siputzx response: { status: true, data: "<url>" }
+    const finalUrl = data.data || data.result || data.url;
 
     if (!finalUrl) {
       return NextResponse.json(
-        { status: false, message: data.message || 'AI tidak mengembalikan hasil' },
+        { status: false, message: data.message || 'API tidak mengembalikan hasil' },
         { status: 502 }
       );
     }
@@ -55,8 +58,8 @@ export async function GET(req: NextRequest) {
       {
         status: false,
         message: isTimeout
-          ? 'Proses AI timeout (>5 menit). Coba file yang lebih kecil.'
-          : err.message || 'Gagal menghubungi AI server',
+          ? 'Timeout. Coba gambar dengan ukuran lebih kecil.'
+          : err.message || 'Gagal menghubungi API',
       },
       { status: 500 }
     );
