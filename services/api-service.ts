@@ -5,19 +5,19 @@ export const processMedia = async (url: string, type: 'image' | 'video'): Promis
   try {
     const { data } = await axios.get<ApiResponse>('/api/proxy', {
       params: { url, type },
-      timeout: 295000, // sedikit di bawah edge timeout
+      timeout: 58000,
     });
 
     const finalUrl = data.result || data.url;
 
     if (!finalUrl) {
-      throw new Error(data.message || 'AI tidak mengembalikan hasil. Coba file lain.');
+      throw new Error(data.message || 'API tidak mengembalikan hasil. Coba gambar lain.');
     }
 
     return finalUrl;
   } catch (error: any) {
     if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
-      throw new Error('Proses AI timeout. Coba lagi dengan file lebih kecil.');
+      throw new Error('Timeout. Coba gambar dengan ukuran lebih kecil.');
     }
     const msg = error.response?.data?.message || error.message || 'Gagal memproses';
     throw new Error(msg);
