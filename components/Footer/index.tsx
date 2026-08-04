@@ -13,7 +13,7 @@ export default function Footer() {
               <span className="text-xl font-black tracking-tight">NovaPixel</span>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-white/60">
-              Premium AI enhancer untuk image dan video dengan tampilan neon brutalism, navigasi cepat, dan alur pakai yang lebih jelas.
+              Platform AI untuk memperjelas gambar dan video, meningkatkan resolusi, serta menghasilkan kualitas visual terbaik hanya dalam beberapa klik.
             </p>
           </div>
 
