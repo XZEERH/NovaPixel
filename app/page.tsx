@@ -88,7 +88,7 @@ export default function Home() {
           transition={{ delay: 0.16 }}
           className="mx-auto mt-8 max-w-3xl text-base leading-relaxed text-white/65 md:text-xl"
         >
-          NovaPixel sekarang tampil lebih premium dengan tema neon brutalism, menu FAB tiga titik yang lebih rapi, serta halaman khusus untuk semua tool dan panduan penggunaan.
+          Tingkatkan kualitas setiap gambar atau video engan AI NovaPixel generasi terbaru. Upscale resolusi, pertajam detail, hilangkan noise, dan ubah foto biasa menjadi hasil yang lebih profesional hanya dengan satu klik.
         </motion.p>
 
         <motion.div
