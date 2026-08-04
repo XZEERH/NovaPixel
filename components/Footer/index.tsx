@@ -38,7 +38,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t-2 border-black/90 pt-8 text-center text-xs font-medium uppercase tracking-[0.35em] text-white/40">
-          © {new Date().getFullYear()} NovaPixel. Built with neon brutalism.
+          © {new Date().getFullYear()} NovaPixel. Powered By RazeerhDev.
         </div>
       </div>
     </footer>
