@@ -1,15 +1,18 @@
 "use client";
 import { useState } from "react";
-import { Menu, X, Image as ImageIcon, Video, Sparkles } from "lucide-react";
+import { Menu, X, Image as ImageIcon, Video, Layers3, BookOpenText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
 
 export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
-    { name: "Image HD", href: "/image-hd", icon: ImageIcon },
-    { name: "Video HD", href: "/video-hd", icon: Video },
+    { name: "Enhancer", href: ROUTES.ENHANCER, icon: Layers3 },
+    { name: "Image HD", href: ROUTES.IMAGE_HD, icon: ImageIcon },
+    { name: "Video HD", href: ROUTES.VIDEO_HD, icon: Video },
+    { name: "About", href: ROUTES.ABOUT, icon: BookOpenText },
   ];
 
   return (
@@ -20,40 +23,33 @@ export default function MobileMenu() {
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            className="fixed inset-0 z-[100] bg-[#0a0a0c] p-6"
+            className="fixed inset-0 z-[100] bg-[#09090f] p-6"
           >
-            <div className="flex justify-between items-center mb-12">
+            <div className="mb-12 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Sparkles className="text-purple-500" />
-                <span className="font-bold text-xl">NovaPixel</span>
+                <Layers3 className="text-fuchsia-400" />
+                <span className="text-xl font-bold">NovaPixel</span>
               </div>
               <button onClick={() => setIsOpen(false)} className="p-2 text-gray-400">
                 <X size={28} />
               </button>
             </div>
 
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4">
               {menuItems.map((item) => (
-                <Link 
-                  key={item.href} 
-                  href={item.href} 
+                <Link
+                  key={item.href}
+                  href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-4 text-2xl font-semibold hover:text-purple-500 transition-colors"
+                  className="flex items-center gap-4 rounded-[1.25rem] border-2 border-black/90 bg-white/[0.06] px-4 py-4 text-lg font-bold shadow-[8px_8px_0_#000] transition-all hover:-translate-y-0.5"
                 >
-                  <item.icon size={24} /> {item.name}
+                  <item.icon size={20} /> {item.name}
                 </Link>
               ))}
-              <div className="pt-6 border-t border-white/10 opacity-50">
-                <p className="text-sm uppercase tracking-widest mb-4">Coming Soon</p>
-                <div className="flex flex-col gap-4">
-                  <span className="flex items-center gap-4 text-gray-500">AI Face Enhance</span>
-                  <span className="flex items-center gap-4 text-gray-500">AI Restore</span>
-                </div>
-              </div>
             </div>
           </motion.div>
         )}
