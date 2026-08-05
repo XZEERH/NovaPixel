@@ -45,7 +45,7 @@ export default function Footer() {
               <span className="text-xl font-black tracking-tight">NovaPixel</span>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-white/60">
-              Premium AI enhancer untuk image dan video dengan tampilan neon brutalism, navigasi cepat, dan alur pakai yang lebih jelas.
+              Tingkatkan kualitas setiap gambar dengan AI generasi terbaru. Upscale resolusi, pertajam detail, hilangkan noise, dan ubah foto biasa menjadi hasil yang lebih profesional hanya dengan satu klik.
             </p>
           </div>
 
@@ -79,7 +79,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t-2 border-black/90 pt-8 text-center text-xs font-medium uppercase tracking-[0.35em] text-white/40">
-          © {new Date().getFullYear()} NovaPixel. Built with neon brutalism.
+          © {new Date().getFullYear()} NovaPixel. Powered By Razeerh.
         </div>
       </div>
     </footer>
