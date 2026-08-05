@@ -31,8 +31,8 @@ export const VideoSyncPlayer = ({ original, enhanced }: { original: string; enha
           <video ref={v1} src={original} onTimeUpdate={sync} className="w-full rounded-2xl border border-white/5 shadow-2xl" muted playsInline />
         </div>
         <div className="relative group">
-          <span className="absolute top-4 left-4 z-10 bg-purple-600 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-widest">Enhanced</span>
-          <video ref={v2} src={enhanced} className="w-full rounded-2xl border border-purple-500/30 shadow-2xl shadow-purple-500/10" muted playsInline />
+          <span className="absolute top-4 left-4 z-10 bg-white/12 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-widest">Enhanced</span>
+          <video ref={v2} src={enhanced} className="w-full rounded-2xl border border-white/10 shadow-2xl shadow-black/20" muted playsInline />
         </div>
       </div>
       <div className="flex justify-center">
