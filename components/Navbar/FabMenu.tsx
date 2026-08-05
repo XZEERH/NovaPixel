@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { EllipsisVertical, Sparkles, Layers3, BookOpenText, Image as ImageIcon, Video } from "lucide-react";
+import { X, Sparkles, Layers3, BookOpenText, Image as ImageIcon, Video, EllipsisVertical } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 
@@ -20,15 +20,15 @@ export default function FabMenu() {
   const quickLabel = useMemo(() => (open ? "Close quick menu" : "Open quick menu"), [open]);
 
   return (
-    <div className="fixed bottom-5 right-5 z-[120]">
+    <>
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 18, scale: 0.96 }}
+            initial={{ opacity: 0, y: 20, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 18, scale: 0.96 }}
+            exit={{ opacity: 0, y: 20, scale: 0.96 }}
             transition={{ duration: 0.18 }}
-            className="mb-4 w-[min(88vw,18rem)] overflow-hidden rounded-[1.5rem] border-[3px] border-black/90 bg-[#101018] p-3 shadow-[12px_12px_0_#000,0_0_35px_rgba(168,85,247,0.16)]"
+            className="fixed bottom-24 right-5 z-[120] w-[min(88vw,18rem)] overflow-hidden rounded-[1.5rem] border-[3px] border-black/90 bg-[#101018] p-3 shadow-[12px_12px_0_#000,0_0_35px_rgba(168,85,247,0.16)]"
           >
             <div className="mb-3 flex items-center justify-between rounded-[1.1rem] border-2 border-black/90 bg-gradient-to-r from-fuchsia-500/25 to-cyan-400/20 px-4 py-3">
               <div>
@@ -68,10 +68,35 @@ export default function FabMenu() {
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label={quickLabel}
-        className="group flex h-16 w-16 items-center justify-center rounded-[1.5rem] border-[3px] border-black/90 bg-white text-black shadow-[12px_12px_0_#000,0_0_30px_rgba(255,255,255,0.14)] transition-all hover:-translate-y-0.5 hover:rotate-[-2deg]"
+        aria-expanded={open}
+        className="group fixed bottom-5 right-5 z-[121] flex h-16 w-16 items-center justify-center rounded-[1.5rem] border-[3px] border-black/90 bg-white text-black shadow-[12px_12px_0_#000,0_0_30px_rgba(255,255,255,0.14)] transition-all hover:-translate-y-0.5 hover:rotate-[-2deg]"
       >
-        <EllipsisVertical size={28} className="transition-transform group-hover:scale-105" />
+        <AnimatePresence mode="wait" initial={false}>
+          {open ? (
+            <motion.span
+              key="close"
+              initial={{ opacity: 0, rotate: -80, scale: 0.7 }}
+              animate={{ opacity: 1, rotate: 0, scale: 1 }}
+              exit={{ opacity: 0, rotate: 80, scale: 0.7 }}
+              transition={{ duration: 0.18 }}
+              className="flex items-center justify-center"
+            >
+              <X size={28} className="transition-transform group-hover:scale-105" />
+            </motion.span>
+          ) : (
+            <motion.span
+              key="menu"
+              initial={{ opacity: 0, rotate: 80, scale: 0.7 }}
+              animate={{ opacity: 1, rotate: 0, scale: 1 }}
+              exit={{ opacity: 0, rotate: -80, scale: 0.7 }}
+              transition={{ duration: 0.18 }}
+              className="flex items-center justify-center"
+            >
+              <EllipsisVertical size={28} className="transition-transform group-hover:scale-105" />
+            </motion.span>
+          )}
+        </AnimatePresence>
       </button>
-    </div>
+    </>
   );
 }
