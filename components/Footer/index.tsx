@@ -13,7 +13,7 @@ export default function Footer() {
               <span className="text-xl font-black tracking-tight">NovaPixel</span>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-white/60">
-              Premium AI enhancer untuk image dan video dengan tampilan neon brutalism, navigasi cepat, dan alur pakai yang lebih jelas.
+              Tingkatkan kualitas setiap gambar dengan AI generasi terbaru. Upscale resolusi, pertajam detail, hilangkan noise, dan ubah foto biasa menjadi hasil yang lebih profesional hanya dengan satu klik.
             </p>
           </div>
 
@@ -31,14 +31,14 @@ export default function Footer() {
             <h4 className="mb-6 text-sm font-black uppercase tracking-[0.3em] text-white/70">Connect</h4>
             <div className="flex gap-4 text-white/60">
               <Github className="cursor-pointer transition-colors hover:text-white" size={20} />
-              <Twitter className="cursor-pointer transition-colors hover:text-white" size={20} />
+              <TikTok className="cursor-pointer transition-colors hover:text-white" size={20} />
               <Instagram className="cursor-pointer transition-colors hover:text-white" size={20} />
             </div>
           </div>
         </div>
 
         <div className="border-t-2 border-black/90 pt-8 text-center text-xs font-medium uppercase tracking-[0.35em] text-white/40">
-          © {new Date().getFullYear()} NovaPixel. Built with neon brutalism.
+          © {new Date().getFullYear()} NovaPixel. Powered By Razeerh.
         </div>
       </div>
     </footer>
