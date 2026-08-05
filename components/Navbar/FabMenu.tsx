@@ -28,16 +28,16 @@ export default function FabMenu() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.96 }}
             transition={{ duration: 0.18 }}
-            className="fixed bottom-24 right-5 z-[120] w-[min(88vw,18rem)] overflow-hidden rounded-[1.5rem] border-[3px] border-black/90 bg-[#101018] p-3 shadow-[12px_12px_0_#000,0_0_35px_rgba(168,85,247,0.16)]"
+            className="fixed bottom-24 right-5 z-[120] w-[min(88vw,18rem)] overflow-hidden rounded-[1.5rem] border-[3px] border-black/90 bg-[#09090d] p-3 shadow-[12px_12px_0_#000,0_0_35px_rgba(255,255,255,0.06)]"
           >
-            <div className="mb-3 flex items-center justify-between rounded-[1.1rem] border-2 border-black/90 bg-gradient-to-r from-fuchsia-500/25 to-cyan-400/20 px-4 py-3">
+            <div className="mb-3 flex items-center justify-between rounded-[1.1rem] border-2 border-black/90 bg-gradient-to-r from-white/8 to-white/3 px-4 py-3">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-fuchsia-100">
+                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/70">
                   Quick Actions
                 </p>
                 <p className="mt-1 text-sm font-bold text-white">NovaPixel shortcuts</p>
               </div>
-              <Sparkles className="text-cyan-300" size={18} />
+              <Sparkles className="text-white/80" size={18} />
             </div>
 
             <div className="grid gap-2">
@@ -49,8 +49,8 @@ export default function FabMenu() {
                   className={cn(
                     "flex items-center justify-between rounded-[1.1rem] border-2 border-black/90 px-4 py-3 text-sm font-bold shadow-[6px_6px_0_#000] transition-all hover:-translate-y-0.5",
                     item.label === "View Chase"
-                      ? "bg-white/[0.08] text-white hover:bg-white/[0.14]"
-                      : "bg-white text-black hover:bg-fuchsia-300"
+                      ? "bg-white/[0.05] text-white hover:bg-white/10"
+                      : "bg-white/90 text-black hover:bg-white"
                   )}
                 >
                   <span className="flex items-center gap-3">
@@ -69,7 +69,7 @@ export default function FabMenu() {
         onClick={() => setOpen((v) => !v)}
         aria-label={quickLabel}
         aria-expanded={open}
-        className="group fixed bottom-5 right-5 z-[121] flex h-16 w-16 items-center justify-center rounded-[1.5rem] border-[3px] border-black/90 bg-white text-black shadow-[12px_12px_0_#000,0_0_30px_rgba(255,255,255,0.14)] transition-all hover:-translate-y-0.5 hover:rotate-[-2deg]"
+        className="group fixed bottom-5 right-5 z-[121] flex h-16 w-16 items-center justify-center rounded-[1.5rem] border-[3px] border-black/90 bg-[#111117] text-white shadow-[12px_12px_0_#000,0_0_30px_rgba(255,255,255,0.08)] transition-all hover:-translate-y-0.5 hover:rotate-[-2deg]"
       >
         <AnimatePresence mode="wait" initial={false}>
           {open ? (

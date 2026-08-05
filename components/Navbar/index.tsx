@@ -56,11 +56,11 @@ export default function Navbar() {
               className="object-contain"
               priority
             />
-            <div className="absolute inset-0 -z-10 rounded-full bg-fuchsia-500/25 blur-xl transition-colors group-hover:bg-fuchsia-500/35" />
+            <div className="absolute inset-0 -z-10 rounded-full bg-white/10 blur-xl transition-colors group-hover:bg-white/20" />
           </div>
           <div className="leading-none">
             <span className="block text-2xl font-black tracking-tighter text-white">
-              Nova<span className="text-fuchsia-400">Pixel</span>
+              Nova<span className="text-white">Pixel</span>
             </span>
             <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.35em] text-white/45">
               Neon Brutalism
@@ -78,10 +78,10 @@ export default function Navbar() {
                   href={link.href}
                   className={cn(
                     "group flex items-center gap-2 text-sm font-semibold transition-colors",
-                    active ? "text-fuchsia-300" : "text-white/60 hover:text-white"
+                    active ? "text-white" : "text-white/60 hover:text-white"
                   )}
                 >
-                  <link.icon size={14} className={cn("transition-transform group-hover:-translate-y-0.5", active && "text-cyan-300")} />
+                  <link.icon size={14} className={cn("transition-transform group-hover:-translate-y-0.5", active && "text-white")} />
                   {link.name}
                 </Link>
               );
@@ -90,7 +90,7 @@ export default function Navbar() {
 
           <Link
             href={ROUTES.ENHANCER}
-            className="group inline-flex items-center gap-2 rounded-full border-2 border-black/90 bg-white px-6 py-2.5 text-sm font-black text-black shadow-[8px_8px_0_#000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-fuchsia-300"
+            className="group inline-flex items-center gap-2 rounded-full border-2 border-black/90 bg-white px-6 py-2.5 text-sm font-black text-black shadow-[8px_8px_0_#000] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-white/90"
           >
             Get Started
             <ChevronRight size={16} className="transition-transform group-hover:translate-x-0.5" />
@@ -113,11 +113,11 @@ export default function Navbar() {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "100%", opacity: 0 }}
             transition={{ type: "spring", stiffness: 220, damping: 26 }}
-            className="fixed right-0 top-0 z-[110] h-full w-[86%] max-w-sm border-l-[3px] border-black/90 bg-[#0c0c13]/96 p-6 backdrop-blur-2xl md:hidden"
+            className="fixed right-0 top-0 z-[110] h-full w-[86%] max-w-sm border-l-[3px] border-black/90 bg-[#07070b]/98 p-6 backdrop-blur-2xl md:hidden"
           >
             <div className="mb-10 flex items-center justify-between">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.45em] text-fuchsia-300/80">
+                <p className="text-[10px] font-black uppercase tracking-[0.45em] text-white/70">
                   NovaPixel
                 </p>
                 <h2 className="mt-2 text-2xl font-black tracking-tight">Menu</h2>
@@ -138,7 +138,7 @@ export default function Navbar() {
                   href={link.href}
                   className={cn(
                     "flex items-center justify-between rounded-[1.25rem] border-2 border-black/90 bg-white/[0.06] px-4 py-4 font-bold shadow-[8px_8px_0_#000] transition-all",
-                    pathname === link.href ? "bg-fuchsia-400 text-black" : "text-white hover:-translate-y-0.5 hover:bg-white/[0.12]"
+                    pathname === link.href ? "bg-white text-black" : "text-white hover:-translate-y-0.5 hover:bg-white/[0.12]"
                   )}
                 >
                   <span className="flex items-center gap-3">
@@ -150,7 +150,7 @@ export default function Navbar() {
               ))}
             </div>
 
-            <div className="mt-8 rounded-[1.4rem] border-2 border-black/90 bg-gradient-to-br from-fuchsia-500/18 to-cyan-400/10 p-4 shadow-[8px_8px_0_#000]">
+            <div className="mt-8 rounded-[1.4rem] border-2 border-black/90 bg-gradient-to-br from-white/6 to-white/2 p-4 shadow-[8px_8px_0_#000]">
               <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/70">Quick note</p>
               <p className="mt-2 text-sm leading-relaxed text-white/75">
                 Akses semua tool dari halaman Enhancer, dan baca alur pakainya di halaman About.

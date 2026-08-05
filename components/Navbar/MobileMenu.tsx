@@ -31,7 +31,7 @@ export default function MobileMenu() {
           >
             <div className="mb-12 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Layers3 className="text-fuchsia-400" />
+                <Layers3 className="text-white/80" />
                 <span className="text-xl font-bold">NovaPixel</span>
               </div>
               <button onClick={() => setIsOpen(false)} className="p-2 text-gray-400">
