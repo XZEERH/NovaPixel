@@ -43,7 +43,7 @@ export default function AboutPage() {
             About / Guide
           </h1>
           <p className="mx-auto mt-5 max-w-3xl text-white/60">
-            Halaman ini menjelaskan fungsi enhancer video dan image, plus cara pakainya supaya alurnya lebih jelas.
+            Halaman ini menjelaskan fungsi enhancer image dan video, plus cara pakainya supaya alurnya lebih jelas.
           </p>
         </motion.div>
 
@@ -74,7 +74,7 @@ export default function AboutPage() {
             </div>
             <h2 className="text-2xl font-black text-white">Use Context</h2>
             <p className="mt-3 text-sm leading-relaxed text-white/60">
-              Gunakan halaman Enhancer sebagai pintu masuk, lalu lanjut ke tool yang sesuai supaya navigasi terasa cepat.
+              Gunakan halaman Enhancer sebagai pintu masuk utama, lalu lanjut ke tool yang sesuai supaya navigasi terasa cepat.
             </p>
           </GlassCard>
         </div>
