@@ -22,8 +22,9 @@ export const useEnhancer = (type: 'image' | 'video') => {
     try {
       setErrorMessage(null);
       setResultUrl(null);
-      setStatus('uploading');
 
+      // === FASE 1: Upload ke Vercel Blob ===
+      setStatus('uploading');
       const blob = await upload(file.name, file, {
         access: 'public',
         handleUploadUrl: '/api/upload',
@@ -32,19 +33,24 @@ export const useEnhancer = (type: 'image' | 'video') => {
       if (!blob.url) throw new Error('Upload gagal — tidak ada URL yang dikembalikan');
 
       setOriginalUrl(blob.url);
-      setStatus('preparing');
-      await new Promise(r => setTimeout(r, 800));
 
+      // === FASE 2: Preparing (singkat) ===
+      setStatus('preparing');
+      await new Promise(r => setTimeout(r, 600));
+
+      // === FASE 3: Enhancing (proses utama AI) ===
       setStatus('enhancing');
       const enhanced = await processMedia(blob.url, type);
 
       if (!enhanced) throw new Error('AI tidak mengembalikan hasil');
 
+      // === FASE 4: Rendering selesai ===
       setStatus('rendering');
-      setResultUrl(enhanced);
-      await new Promise(r => setTimeout(r, 500));
+      await new Promise(r => setTimeout(r, 400));
 
+      setResultUrl(enhanced);
       setStatus('completed');
+
     } catch (error: any) {
       console.error('Enhancement Error:', error);
       setErrorMessage(error?.message || 'Terjadi kesalahan saat memproses');
