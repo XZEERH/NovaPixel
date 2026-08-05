@@ -34,22 +34,22 @@ export default function ImageHDPage() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
-            Image <span className="text-purple-500">Enhancer</span>
+            Image <span className="text-white/80">Enhancer</span>
           </h1>
           <p className="text-gray-400">Transform low-res images into 4K masterpieces instantly.</p>
         </div>
 
         {/* IDLE: Upload area */}
         {status === 'idle' && (
-          <GlassCard className="flex flex-col items-center py-20 border-dashed border-2 border-purple-500/20">
-            <div className="p-6 bg-purple-500/10 rounded-full mb-6">
-              <Upload size={48} className="text-purple-500" />
+          <GlassCard className="flex flex-col items-center py-20 border-dashed border-2 border-white/10">
+            <div className="p-6 bg-white/5 rounded-full mb-6">
+              <Upload size={48} className="text-white/80" />
             </div>
             <p className="text-gray-400 mb-6 text-sm">JPG, PNG, WEBP — maks 10MB</p>
             <input type="file" id="img-up" hidden accept="image/*" onChange={onFileChange} />
             <label
               htmlFor="img-up"
-              className="bg-purple-600 hover:bg-purple-700 px-10 py-4 rounded-2xl font-bold cursor-pointer transition-all text-white"
+              className="bg-white/90 hover:bg-white px-10 py-4 rounded-2xl font-bold cursor-pointer transition-all text-black"
             >
               Choose Image
             </label>
@@ -59,7 +59,7 @@ export default function ImageHDPage() {
         {/* PROCESSING: Loading + progress */}
         {status !== 'idle' && status !== 'completed' && status !== 'error' && (
           <GlassCard className="py-20 text-center">
-            <Wand2 className="mx-auto text-purple-500 animate-pulse mb-6" size={48} />
+            <Wand2 className="mx-auto text-white/80 animate-pulse mb-6" size={48} />
             <CustomProgress status={status} />
           </GlassCard>
         )}
@@ -78,7 +78,7 @@ export default function ImageHDPage() {
             </div>
             <button
               onClick={reset}
-              className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-2xl font-bold transition-all text-white"
+              className="flex items-center gap-2 bg-white/90 hover:bg-white px-8 py-3 rounded-2xl font-bold transition-all text-black"
             >
               <RefreshCw size={18} /> Coba Lagi
             </button>
@@ -91,10 +91,10 @@ export default function ImageHDPage() {
             {/* Label before/after */}
             <div className="flex justify-between px-2 text-sm font-semibold">
               <span className="text-gray-400">◀ Original</span>
-              <span className="text-purple-400">Enhanced HD ▶</span>
+              <span className="text-white/70">Enhanced HD ▶</span>
             </div>
 
-            <GlassCard className="p-0 overflow-hidden bg-black rounded-2xl">
+            <GlassCard className="p-0 overflow-hidden bg-[#0c0c10] rounded-2xl">
               <ReactCompareSlider
                 itemOne={<ReactCompareSliderImage src={originalUrl} alt="Original" style={{ objectFit: 'contain' }} />}
                 itemTwo={<ReactCompareSliderImage src={resultUrl} alt="Enhanced" style={{ objectFit: 'contain' }} />}
@@ -112,7 +112,7 @@ export default function ImageHDPage() {
               </button>
               <button
                 onClick={handleDownload}
-                className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 px-10 py-4 rounded-2xl font-bold transition-all shadow-[0_0_20px_rgba(168,85,247,0.4)] text-white"
+                className="flex items-center gap-2 bg-white/90 hover:bg-white px-10 py-4 rounded-2xl font-bold transition-all shadow-[0_0_20px_rgba(255,255,255,0.18)] text-black"
               >
                 <Download size={20} /> Download HD
               </button>
