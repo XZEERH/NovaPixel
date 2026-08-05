@@ -1,6 +1,38 @@
 import Link from "next/link";
-import { Sparkles, Github, Twitter, Instagram } from 'lucide-react';
+import type { ComponentType } from "react";
+import { Sparkles, Github, Instagram, Send } from 'lucide-react';
 import { ROUTES } from "@/constants/routes";
+
+type SocialLink = {
+  label: string;
+  href: string;
+  icon: ComponentType<{ size?: number; className?: string }>;
+};
+
+const socialLinks: SocialLink[] = [
+  { label: "GitHub", href: "https://github.com", icon: Github },
+  { label: "Telegram", href: "https://t.me", icon: Send },
+  { label: "Instagram", href: "https://www.instagram.com", icon: Instagram },
+  { label: "TikTok", href: "https://www.tiktok.com", icon: TikTokIcon },
+];
+
+function TikTokIcon({ size = 20, className }: { size?: number; className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill="none"
+      aria-hidden="true"
+      className={className}
+    >
+      <path
+        d="M16.5 3.5c.7 1.9 1.9 3.2 4 3.5v3.2c-1.6 0-3.1-.5-4-1.1v6.5c0 4-3.2 7.2-7.2 7.2S2.1 19.6 2.1 15.6s3.2-7.2 7.2-7.2c.3 0 .6 0 .9.1v3.4c-.3-.1-.6-.1-.9-.1-2.1 0-3.8 1.7-3.8 3.8s1.7 3.8 3.8 3.8 3.8-1.7 3.8-3.8V3.5h3.4Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
 
 export default function Footer() {
   return (
@@ -13,7 +45,7 @@ export default function Footer() {
               <span className="text-xl font-black tracking-tight">NovaPixel</span>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-white/60">
-              Tingkatkan kualitas setiap gambar dengan AI generasi terbaru. Upscale resolusi, pertajam detail, hilangkan noise, dan ubah foto biasa menjadi hasil yang lebih profesional hanya dengan satu klik.
+              Premium AI enhancer untuk image dan video dengan tampilan neon brutalism, navigasi cepat, dan alur pakai yang lebih jelas.
             </p>
           </div>
 
@@ -29,16 +61,25 @@ export default function Footer() {
 
           <div>
             <h4 className="mb-6 text-sm font-black uppercase tracking-[0.3em] text-white/70">Connect</h4>
-            <div className="flex gap-4 text-white/60">
-              <Github className="cursor-pointer transition-colors hover:text-white" size={20} />
-              <Twitter className="cursor-pointer transition-colors hover:text-white" size={20} />
-              <Instagram className="cursor-pointer transition-colors hover:text-white" size={20} />
+            <div className="flex flex-wrap gap-3 text-white/70">
+              {socialLinks.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label={item.label}
+                  className="group inline-flex h-11 w-11 items-center justify-center rounded-[1rem] border-2 border-black/90 bg-white/5 shadow-[5px_5px_0_#000] transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:text-black"
+                >
+                  <item.icon size={20} className="transition-transform duration-200 group-hover:scale-110" />
+                </a>
+              ))}
             </div>
           </div>
         </div>
 
         <div className="border-t-2 border-black/90 pt-8 text-center text-xs font-medium uppercase tracking-[0.35em] text-white/40">
-          © {new Date().getFullYear()} NovaPixel. Powered By Razeerh.
+          © {new Date().getFullYear()} NovaPixel. Built with neon brutalism.
         </div>
       </div>
     </footer>
