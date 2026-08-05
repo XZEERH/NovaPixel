@@ -28,11 +28,11 @@ export default function FabMenu() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 18, scale: 0.96 }}
             transition={{ duration: 0.18 }}
-            className="mb-4 w-[min(86vw,18rem)] overflow-hidden rounded-[1.5rem] border-[3px] border-black/90 bg-[#11111a]/96 p-3 shadow-[10px_10px_0_#000,0_0_35px_rgba(168,85,247,0.16)] backdrop-blur-2xl"
+            className="mb-4 w-[min(88vw,18rem)] overflow-hidden rounded-[1.5rem] border-[3px] border-black/90 bg-[#101018] p-3 shadow-[12px_12px_0_#000,0_0_35px_rgba(168,85,247,0.16)]"
           >
-            <div className="mb-3 flex items-center justify-between rounded-[1.1rem] border-2 border-black/90 bg-gradient-to-r from-fuchsia-500/20 to-cyan-400/15 px-4 py-3">
+            <div className="mb-3 flex items-center justify-between rounded-[1.1rem] border-2 border-black/90 bg-gradient-to-r from-fuchsia-500/25 to-cyan-400/20 px-4 py-3">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-fuchsia-200/80">
+                <p className="text-[10px] font-black uppercase tracking-[0.35em] text-fuchsia-100">
                   Quick Actions
                 </p>
                 <p className="mt-1 text-sm font-bold text-white">NovaPixel shortcuts</p>
@@ -68,7 +68,7 @@ export default function FabMenu() {
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label={quickLabel}
-        className="group flex h-16 w-16 items-center justify-center rounded-[1.5rem] border-[3px] border-black/90 bg-[linear-gradient(135deg,#ffffff_0%,#f3e8ff_45%,#c4b5fd_100%)] text-black shadow-[10px_10px_0_#000,0_0_35px_rgba(168,85,247,0.2)] transition-all hover:-translate-y-0.5 hover:rotate-[-2deg]"
+        className="group flex h-16 w-16 items-center justify-center rounded-[1.5rem] border-[3px] border-black/90 bg-white text-black shadow-[12px_12px_0_#000,0_0_30px_rgba(255,255,255,0.14)] transition-all hover:-translate-y-0.5 hover:rotate-[-2deg]"
       >
         <EllipsisVertical size={28} className="transition-transform group-hover:scale-105" />
       </button>
