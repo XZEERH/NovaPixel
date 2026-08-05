@@ -58,8 +58,8 @@ const comingSoon = [
 export default function Home() {
   return (
     <div className="relative overflow-hidden pt-20">
-      <div className="absolute left-[-10%] top-[-8%] h-[40%] w-[40%] rounded-full bg-fuchsia-500/10 blur-[120px] -z-0" />
-      <div className="absolute bottom-[-12%] right-[-8%] h-[40%] w-[40%] rounded-full bg-cyan-400/10 blur-[120px] -z-0" />
+      <div className="absolute left-[-10%] top-[-8%] h-[40%] w-[40%] rounded-full bg-white/5 blur-[120px] -z-0" />
+      <div className="absolute bottom-[-12%] right-[-8%] h-[40%] w-[40%] rounded-full bg-white/5 blur-[120px] -z-0" />
 
       <section className="container mx-auto relative z-10 px-6 py-24 text-center">
         <motion.div
@@ -77,7 +77,7 @@ export default function Home() {
           className="mx-auto max-w-5xl text-5xl font-black leading-[0.9] tracking-tighter text-white md:text-8xl"
         >
           ENHANCE EVERY{" "}
-          <span className="bg-gradient-to-r from-fuchsia-400 via-cyan-300 to-violet-300 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-white via-zinc-200 to-slate-400 bg-clip-text text-transparent">
             PIXEL.
           </span>
         </motion.h1>
@@ -99,14 +99,14 @@ export default function Home() {
         >
           <Link
             href={ROUTES.ENHANCER}
-            className="group inline-flex items-center justify-center gap-2 rounded-[1.4rem] border-[3px] border-black/90 bg-white px-8 py-4 text-lg font-black text-black shadow-[10px_10px_0_#000] transition-all hover:-translate-y-0.5 hover:bg-fuchsia-300"
+            className="group inline-flex items-center justify-center gap-2 rounded-[1.4rem] border-[3px] border-black/90 bg-white px-8 py-4 text-lg font-black text-black shadow-[10px_10px_0_#000] transition-all hover:-translate-y-0.5 hover:bg-white/90"
           >
             Get Started
             <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
           </Link>
           <Link
             href={ROUTES.ABOUT}
-            className="group inline-flex items-center justify-center gap-2 rounded-[1.4rem] border-[3px] border-black/90 bg-white/[0.08] px-8 py-4 text-lg font-black text-white shadow-[10px_10px_0_#000] transition-all hover:-translate-y-0.5 hover:bg-white/[0.12]"
+            className="group inline-flex items-center justify-center gap-2 rounded-[1.4rem] border-[3px] border-black/90 bg-[#111118] px-8 py-4 text-lg font-black text-white shadow-[10px_10px_0_#000] transition-all hover:-translate-y-0.5 hover:bg-white/10"
           >
             View Chase
             <Sparkles size={18} className="transition-transform group-hover:rotate-12" />
@@ -154,7 +154,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="absolute bottom-0 left-1/2 -z-0 h-[300px] w-full -translate-x-1/2 bg-gradient-to-t from-fuchsia-900/10 to-transparent" />
+      <div className="absolute bottom-0 left-1/2 -z-0 h-[300px] w-full -translate-x-1/2 bg-gradient-to-t from-white/5 to-transparent" />
     </div>
   );
 }
