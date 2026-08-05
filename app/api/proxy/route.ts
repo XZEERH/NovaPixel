@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from 'next/server';
 export const runtime = 'edge';
 export const maxDuration = 60;
 
+const API_KEY = 'kyzz5369077165784';
+const API_BASE = 'https://api.kyzzz.xyz/api/tools';
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const url = searchParams.get('url');
@@ -12,22 +15,16 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ status: false, message: 'URL required' }, { status: 400 });
   }
 
-  // Video belum tersedia
-  if (type === 'video') {
-    return NextResponse.json(
-      { status: false, message: 'Video HD coming soon' },
-      { status: 501 }
-    );
-  }
-
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 55000);
 
-    const response = await fetch(
-      `https://api.siputzx.my.id/api/tools/upscale?url=${encodeURIComponent(url)}`,
-      { signal: controller.signal }
-    );
+    // Pilih endpoint berdasarkan type: video atau image
+    const endpoint = type === 'video'
+      ? `${API_BASE}/upscale-vid?apikey=${API_KEY}&url=${encodeURIComponent(url)}`
+      : `${API_BASE}/upscale?apikey=${API_KEY}&url=${encodeURIComponent(url)}`;
+
+    const response = await fetch(endpoint, { signal: controller.signal });
 
     clearTimeout(timeoutId);
 
@@ -40,7 +37,7 @@ export async function GET(req: NextRequest) {
 
     const data = await response.json();
 
-    // siputzx response: { status: true, data: "<url>" }
+    // Kyzzz API response: { status: true, data: "<url>" } atau { result: "<url>" }
     const finalUrl = data.data || data.result || data.url;
 
     if (!finalUrl) {
@@ -58,7 +55,7 @@ export async function GET(req: NextRequest) {
       {
         status: false,
         message: isTimeout
-          ? 'Timeout. Coba gambar dengan ukuran lebih kecil.'
+          ? 'Timeout. Coba file dengan ukuran lebih kecil.'
           : err.message || 'Gagal menghubungi API',
       },
       { status: 500 }
