@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "api-faa.my.id" },
+      { protocol: "https", hostname: "api.kyzzz.xyz" },
       { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
     ],
   },
