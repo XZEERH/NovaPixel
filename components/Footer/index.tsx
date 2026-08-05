@@ -11,7 +11,7 @@ type SocialLink = {
 
 const socialLinks: SocialLink[] = [
   { label: "GitHub", href: "https://github.com/XZEERH", icon: Github },
-  { label: "Telegram", href: "https://t.me/@RazeerhYa", icon: Send },
+  { label: "Telegram", href: "https://t.me/RazeerhYa", icon: Send },
   { label: "Instagram", href: "https://www.instagram.com/@razeerh.edukasi", icon: Instagram },
   { label: "TikTok", href: "https://www.tiktok.com/@razeerh.edukasi", icon: TikTokIcon },
 ];
