@@ -5,7 +5,7 @@ export const ProcessingProgressBar = ({ progress }: { progress: number }) => (
     <motion.div 
       initial={{ width: 0 }}
       animate={{ width: `${progress}%` }}
-      className="h-full bg-gradient-to-r from-purple-600 to-blue-500 shadow-[0_0_15px_rgba(168,85,247,0.5)]"
+      className="h-full bg-gradient-to-r from-white/80 to-white/35 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
     />
   </div>
 );
