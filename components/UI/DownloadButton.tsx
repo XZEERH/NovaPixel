@@ -11,7 +11,7 @@ export default function DownloadButton({ url, type }: { url: string; type: strin
   return (
     <button 
       onClick={handleDownload}
-      className="bg-gradient-to-r from-purple-600 to-blue-600 px-10 py-4 rounded-2xl font-black text-lg hover:scale-105 transition-all shadow-xl shadow-purple-600/20 flex items-center gap-3"
+      className="bg-gradient-to-r from-white/10 to-white/4 px-10 py-4 rounded-2xl font-black text-lg hover:scale-105 transition-all shadow-xl shadow-black/20 flex items-center gap-3"
     >
       <Download size={24} /> DOWNLOAD HD {type.toUpperCase()}
     </button>
