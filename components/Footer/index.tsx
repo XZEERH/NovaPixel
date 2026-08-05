@@ -10,10 +10,10 @@ type SocialLink = {
 };
 
 const socialLinks: SocialLink[] = [
-  { label: "GitHub", href: "https://github.com", icon: Github },
-  { label: "Telegram", href: "https://t.me", icon: Send },
-  { label: "Instagram", href: "https://www.instagram.com", icon: Instagram },
-  { label: "TikTok", href: "https://www.tiktok.com", icon: TikTokIcon },
+  { label: "GitHub", href: "https://github.com/XZEERH", icon: Github },
+  { label: "Telegram", href: "https://t.me/@RazeerhYa", icon: Send },
+  { label: "Instagram", href: "https://www.instagram.com/@razeerh.edukasi", icon: Instagram },
+  { label: "TikTok", href: "https://www.tiktok.com/@razeerh.edukasi", icon: TikTokIcon },
 ];
 
 function TikTokIcon({ size = 20, className }: { size?: number; className?: string }) {
