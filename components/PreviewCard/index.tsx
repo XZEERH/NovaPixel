@@ -14,7 +14,7 @@ export const PreviewCard = ({ original, enhanced, type }: PreviewCardProps) => {
   return (
     <GlassCard className="space-y-6">
       <div className="text-center mb-4">
-        <span className="px-4 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold uppercase tracking-widest">
+        <span className="px-4 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-bold uppercase tracking-widest">
           AI Result Preview
         </span>
       </div>
