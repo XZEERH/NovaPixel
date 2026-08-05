@@ -35,16 +35,16 @@ export default function VideoHDPage() {
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16 text-white">
           <h1 className="text-5xl md:text-6xl font-black mb-6 tracking-tighter">
-            Video <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">HD Upscaler</span>
+            Video <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-slate-400">HD Upscaler</span>
           </h1>
         </div>
 
         {/* IDLE */}
         {status === 'idle' && (
-          <GlassCard className="py-24 text-center border-dashed border-2 border-blue-500/20">
+          <GlassCard className="py-24 text-center border-dashed border-2 border-white/10">
             <input type="file" id="v-up" hidden accept="video/*" onChange={handleVideoUpload} />
-            <div className="w-20 h-20 bg-blue-600/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
-              <Clapperboard className="text-blue-500" size={40} />
+            <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center mx-auto mb-6">
+              <Clapperboard className="text-white/80" size={40} />
             </div>
             <p className="text-gray-400 mb-6 text-sm">MP4, MOV, MKV — maks 50MB</p>
             <label
@@ -77,7 +77,7 @@ export default function VideoHDPage() {
             </div>
             <button
               onClick={reset}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-2xl font-bold transition-all text-white"
+              className="flex items-center gap-2 bg-white/90 hover:bg-white px-8 py-3 rounded-2xl font-bold transition-all text-black"
             >
               <RefreshCw size={18} /> Coba Lagi
             </button>
@@ -89,7 +89,7 @@ export default function VideoHDPage() {
           <div className="space-y-10">
             <div className="flex justify-between px-2 text-sm font-semibold">
               <span className="text-gray-400">◀ Original</span>
-              <span className="text-blue-400">Enhanced HD ▶</span>
+              <span className="text-white/70">Enhanced HD ▶</span>
             </div>
 
             <GlassCard className="p-4 bg-black/40 border-white/5">
@@ -105,7 +105,7 @@ export default function VideoHDPage() {
               </button>
               <button
                 onClick={handleDownload}
-                className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 px-12 py-5 rounded-2xl font-black text-white hover:scale-105 transition-all"
+                className="flex items-center gap-2 bg-gradient-to-r from-white/10 to-white/4 px-12 py-5 rounded-2xl font-black text-white hover:scale-105 transition-all"
               >
                 <Download size={24} /> DOWNLOAD HD VIDEO
               </button>
