@@ -4,8 +4,8 @@ import { ProcessStatus, StepDetail } from "@/types/global";
  * Endpoint API External NovaPixel
  */
 export const API_ENDPOINTS = {
-  IMAGE_HD: 'https://api-faa.my.id/faa/hdv2',
-  VIDEO_HD: 'https://api-faa.my.id/faa/hdvid',
+  IMAGE_HD: 'https://api.kyzzz.xyz/api/tools/upscale?apikey=kyzz5369077165784',
+  VIDEO_HD: 'https://api.kyzzz.xyz/api/tools/upscale-vid?apikey=kyzz5369077165784',
 };
 
 /**
