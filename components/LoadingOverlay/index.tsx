@@ -11,7 +11,7 @@ export const LoadingOverlay = ({ step }: { step: AppStep }) => (
   >
     <div className="max-w-md w-full">
       <CustomProgress status={step} />
-      <p className="text-center mt-6 text-purple-400 animate-pulse font-medium tracking-widest uppercase text-[10px]">
+      <p className="text-center mt-6 text-white/70 animate-pulse font-medium tracking-widest uppercase text-[10px]">
         Don't close this tab while AI is working...
       </p>
     </div>
