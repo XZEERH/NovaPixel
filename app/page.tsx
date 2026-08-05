@@ -67,7 +67,7 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           className="mx-auto mb-8 inline-flex items-center gap-2 rounded-full border-2 border-black/90 bg-white px-4 py-2 text-sm font-black text-black shadow-[8px_8px_0_#000]"
         >
-          <Zap size={16} /> Neon Brutalism Update is live
+          <Zap size={16} /> NovaPixel Ready To Execute!
         </motion.div>
 
         <motion.h1
@@ -76,9 +76,9 @@ export default function Home() {
           transition={{ delay: 0.08 }}
           className="mx-auto max-w-5xl text-5xl font-black leading-[0.9] tracking-tighter text-white md:text-8xl"
         >
-          ENHANCE EVERY{" "}
+          IMPROVE EVERY QUALITY IN{" "}
           <span className="bg-gradient-to-r from-white via-zinc-200 to-slate-400 bg-clip-text text-transparent">
-            PIXEL.
+            NOVAPIXEL.
           </span>
         </motion.h1>
 
@@ -88,7 +88,7 @@ export default function Home() {
           transition={{ delay: 0.16 }}
           className="mx-auto mt-8 max-w-3xl text-base leading-relaxed text-white/65 md:text-xl"
         >
-          NovaPixel sekarang tampil lebih premium dengan tema neon brutalism, menu FAB tiga titik yang lebih rapi, serta halaman khusus untuk semua tool dan panduan penggunaan.
+          Platform AI untuk memperjelas gambar dan video, meningkatkan resolusi, serta menghasilkan kualitas visual terbaik hanya dalam beberapa klik.
         </motion.p>
 
         <motion.div
