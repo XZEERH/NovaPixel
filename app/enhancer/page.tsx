@@ -67,7 +67,7 @@ export default function EnhancerPage() {
               <Link href={tool.href} className="group block h-full">
                 <GlassCard className="h-full transition-all group-hover:-translate-y-1 group-hover:bg-white/[0.08]">
                   <div className="mb-5 flex items-center justify-between">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-[1.1rem] border-2 border-black/90 bg-gradient-to-br from-fuchsia-500 to-cyan-400 text-black shadow-[8px_8px_0_#000]">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-[1.1rem] border-2 border-black/90 bg-gradient-to-br from-white/10 to-white/4 text-black shadow-[8px_8px_0_#000]">
                       <tool.icon size={26} />
                     </div>
                     <span className="rounded-full border-2 border-black/90 bg-white px-3 py-1 text-[10px] font-black uppercase tracking-[0.3em] text-black shadow-[5px_5px_0_#000]">
@@ -76,7 +76,7 @@ export default function EnhancerPage() {
                   </div>
                   <h2 className="text-2xl font-black text-white">{tool.title}</h2>
                   <p className="mt-3 text-sm leading-relaxed text-white/60">{tool.desc}</p>
-                  <div className="mt-6 inline-flex items-center gap-2 text-sm font-black text-fuchsia-300">
+                  <div className="mt-6 inline-flex items-center gap-2 text-sm font-black text-white/70">
                     Open tool <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
                   </div>
                 </GlassCard>
@@ -96,10 +96,10 @@ export default function EnhancerPage() {
           ))}
         </div>
 
-        <GlassCard className="mt-8 bg-gradient-to-br from-fuchsia-500/14 to-cyan-400/10">
+        <GlassCard className="mt-8 bg-gradient-to-br from-white/5 to-transparent">
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="mb-3 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.35em] text-fuchsia-200">
+              <p className="mb-3 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.35em] text-white/70">
                 <Sparkles size={14} /> Fast path
               </p>
               <h2 className="text-2xl font-black text-white md:text-3xl">
