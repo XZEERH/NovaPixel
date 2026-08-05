@@ -109,13 +109,22 @@ export default function EnhancerPage() {
                 Dua tool utama tetap tersedia terpisah supaya sistem lama tetap aman, tapi semuanya bisa dijangkau dari satu tempat.
               </p>
             </div>
-            <Link
-              href={ROUTES.IMAGE_HD}
-              className="inline-flex items-center justify-center gap-2 rounded-[1.2rem] border-[3px] border-black/90 bg-white px-6 py-4 text-sm font-black text-black shadow-[8px_8px_0_#000] transition-all hover:-translate-y-0.5"
-            >
-              Go to Image HD
-              <ArrowRight size={16} />
-            </Link>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link
+                href={ROUTES.IMAGE_HD}
+                className="inline-flex items-center justify-center gap-2 rounded-[1.2rem] border-[3px] border-black/90 bg-white px-6 py-4 text-sm font-black text-black shadow-[8px_8px_0_#000] transition-all hover:-translate-y-0.5"
+              >
+                Go to Image HD
+                <ArrowRight size={16} />
+              </Link>
+              <Link
+                href={ROUTES.VIDEO_HD}
+                className="inline-flex items-center justify-center gap-2 rounded-[1.2rem] border-[3px] border-black/90 bg-white/[0.08] px-6 py-4 text-sm font-black text-white shadow-[8px_8px_0_#000] transition-all hover:-translate-y-0.5 hover:bg-white/[0.12]"
+              >
+                Go to Video HD
+                <ArrowRight size={16} />
+              </Link>
+            </div>
           </div>
         </GlassCard>
       </div>
