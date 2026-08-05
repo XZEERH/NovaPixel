@@ -31,7 +31,7 @@ export default function Footer() {
             <h4 className="mb-6 text-sm font-black uppercase tracking-[0.3em] text-white/70">Connect</h4>
             <div className="flex gap-4 text-white/60">
               <Github className="cursor-pointer transition-colors hover:text-white" size={20} />
-              <TikTok className="cursor-pointer transition-colors hover:text-white" size={20} />
+              <Twitter className="cursor-pointer transition-colors hover:text-white" size={20} />
               <Instagram className="cursor-pointer transition-colors hover:text-white" size={20} />
             </div>
           </div>
