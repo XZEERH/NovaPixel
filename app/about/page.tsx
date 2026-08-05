@@ -48,7 +48,7 @@ export default function AboutPage() {
         </motion.div>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          <GlassCard className="bg-gradient-to-br from-fuchsia-500/16 to-transparent">
+          <GlassCard className="bg-gradient-to-br from-white/6 to-transparent">
             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-[1.1rem] border-2 border-black/90 bg-white text-black shadow-[8px_8px_0_#000]">
               <ImageIcon size={26} />
             </div>
@@ -58,7 +58,7 @@ export default function AboutPage() {
             </p>
           </GlassCard>
 
-          <GlassCard className="bg-gradient-to-br from-cyan-400/16 to-transparent">
+          <GlassCard className="bg-gradient-to-br from-white/5 to-transparent">
             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-[1.1rem] border-2 border-black/90 bg-white text-black shadow-[8px_8px_0_#000]">
               <Video size={26} />
             </div>
@@ -68,8 +68,8 @@ export default function AboutPage() {
             </p>
           </GlassCard>
 
-          <GlassCard className="bg-gradient-to-br from-white/8 to-transparent">
-            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-[1.1rem] border-2 border-black/90 bg-gradient-to-br from-fuchsia-500 to-cyan-400 text-black shadow-[8px_8px_0_#000]">
+          <GlassCard className="bg-gradient-to-br from-white/4 to-transparent">
+            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-[1.1rem] border-2 border-black/90 bg-gradient-to-br from-white/10 to-white/4 text-black shadow-[8px_8px_0_#000]">
               <Wand2 size={26} />
             </div>
             <h2 className="text-2xl font-black text-white">Use Context</h2>
@@ -82,7 +82,7 @@ export default function AboutPage() {
         <div className="mt-8 grid gap-6 lg:grid-cols-3">
           {steps.map((step, index) => (
             <GlassCard key={step.title}>
-              <div className="mb-4 text-sm font-black uppercase tracking-[0.35em] text-fuchsia-300">
+              <div className="mb-4 text-sm font-black uppercase tracking-[0.35em] text-white/70">
                 Step 0{index + 1}
               </div>
               <h3 className="text-2xl font-black text-white">{step.title}</h3>
@@ -94,7 +94,7 @@ export default function AboutPage() {
         <GlassCard className="mt-8">
           <div className="grid gap-8 md:grid-cols-2">
             <div>
-              <p className="mb-3 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.35em] text-fuchsia-300">
+              <p className="mb-3 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.35em] text-white/70">
                 <Sparkles size={14} /> When to use
               </p>
               <h2 className="text-3xl font-black text-white">Panduan singkat pemakaian</h2>
