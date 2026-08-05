@@ -9,21 +9,21 @@ export default function Footer() {
         <div className="mb-12 grid gap-10 md:grid-cols-4">
           <div className="md:col-span-2">
             <div className="mb-6 flex items-center gap-3">
-              <Sparkles className="text-fuchsia-400" />
+              <Sparkles className="text-white/80" />
               <span className="text-xl font-black tracking-tight">NovaPixel</span>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-white/60">
-              Platform AI untuk memperjelas gambar dan video, meningkatkan resolusi, serta menghasilkan kualitas visual terbaik hanya dalam beberapa klik.
+              Premium AI enhancer untuk image dan video dengan tampilan neon brutalism, navigasi cepat, dan alur pakai yang lebih jelas.
             </p>
           </div>
 
           <div>
             <h4 className="mb-6 text-sm font-black uppercase tracking-[0.3em] text-white/70">Product</h4>
             <ul className="space-y-4 text-sm text-white/60">
-              <li><Link href={ROUTES.ENHANCER} className="hover:text-fuchsia-300">All Enhancers</Link></li>
-              <li><Link href={ROUTES.IMAGE_HD} className="hover:text-fuchsia-300">Image HD</Link></li>
-              <li><Link href={ROUTES.VIDEO_HD} className="hover:text-fuchsia-300">Video HD</Link></li>
-              <li><Link href={ROUTES.ABOUT} className="hover:text-fuchsia-300">About / Guide</Link></li>
+              <li><Link href={ROUTES.ENHANCER} className="hover:text-white">All Enhancers</Link></li>
+              <li><Link href={ROUTES.IMAGE_HD} className="hover:text-white">Image HD</Link></li>
+              <li><Link href={ROUTES.VIDEO_HD} className="hover:text-white">Video HD</Link></li>
+              <li><Link href={ROUTES.ABOUT} className="hover:text-white">About / Guide</Link></li>
             </ul>
           </div>
 
@@ -38,7 +38,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t-2 border-black/90 pt-8 text-center text-xs font-medium uppercase tracking-[0.35em] text-white/40">
-          © {new Date().getFullYear()} NovaPixel. Powered By RazeerhDev.
+          © {new Date().getFullYear()} NovaPixel. Built with neon brutalism.
         </div>
       </div>
     </footer>
