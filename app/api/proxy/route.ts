@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'edge';
-export const maxDuration = 60;
+// Ganti ke Node.js runtime agar tidak ada batasan 60 detik Edge
+export const runtime = 'nodejs';
+export const maxDuration = 120; // 2 menit maksimal
 
 const API_KEY = 'kyzz5369077165784';
 const API_BASE = 'https://api.kyzzz.xyz/api/tools';
@@ -17,7 +18,8 @@ export async function GET(req: NextRequest) {
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 55000);
+    // Timeout 110 detik agar ada ruang sebelum maxDuration 120 detik
+    const timeoutId = setTimeout(() => controller.abort(), 110000);
 
     // Pilih endpoint berdasarkan type: video atau image
     const endpoint = type === 'video'
@@ -55,7 +57,7 @@ export async function GET(req: NextRequest) {
       {
         status: false,
         message: isTimeout
-          ? 'Timeout. Coba file dengan ukuran lebih kecil.'
+          ? 'Timeout. API terlalu lama merespons. Coba file lebih kecil.'
           : err.message || 'Gagal menghubungi API',
       },
       { status: 500 }
