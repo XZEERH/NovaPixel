@@ -22,16 +22,16 @@ export default function FeatureCard({ title, desc, icon: Icon, href, delay }: Fe
       viewport={{ once: true }}
     >
       <Link href={href} className="group block">
-        <GlassCard className="h-full hover:border-purple-500/50 hover:bg-white/[0.07] transition-all relative overflow-hidden">
+        <GlassCard className="h-full hover:border-white/20 hover:bg-white/[0.06] transition-all relative overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all text-white">
             <Icon size={80} />
           </div>
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(168,85,247,0.4)]">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-white/12 to-white/4 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(255,255,255,0.08)]">
             <Icon className="text-white" size={28} />
           </div>
           <h3 className="text-2xl font-bold mb-3 text-white">{title}</h3>
           <p className="text-gray-400 leading-relaxed mb-6 text-sm">{desc}</p>
-          <div className="flex items-center gap-2 text-sm font-bold text-purple-400 group-hover:text-purple-300 transition-colors">
+          <div className="flex items-center gap-2 text-sm font-bold text-white/70 group-hover:text-white transition-colors">
             LAUNCH TOOL <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </div>
         </GlassCard>
