@@ -63,7 +63,7 @@ export default function Navbar() {
               Nova<span className="text-fuchsia-400">Pixel</span>
             </span>
             <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.35em] text-white/45">
-              Powered By AI Enhancer
+              Neon Brutalism
             </span>
           </div>
         </Link>
@@ -99,7 +99,7 @@ export default function Navbar() {
 
         <button
           onClick={() => setIsOpen((v) => !v)}
-          className="rounded-full border-2 border-black/90 bg-white/[0.08] p-3 text-white shadow-[6px_6px_0_#000] transition-transform hover:-translate-y-0.5 md:hidden"
+          className="rounded-full border-2 border-black/90 bg-white/95 p-3 text-black shadow-[6px_6px_0_#000] transition-transform hover:-translate-y-0.5 md:hidden"
           aria-label="Open menu"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -124,7 +124,7 @@ export default function Navbar() {
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="rounded-full border-2 border-black/90 bg-white/10 p-2 shadow-[6px_6px_0_#000]"
+                className="rounded-full border-2 border-black/90 bg-white/95 p-2 text-black shadow-[6px_6px_0_#000]"
                 aria-label="Close menu"
               >
                 <X size={20} />
