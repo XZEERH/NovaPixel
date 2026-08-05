@@ -63,7 +63,7 @@ export default function Navbar() {
               Nova<span className="text-white">Pixel</span>
             </span>
             <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.35em] text-white/45">
-              Neon Brutalism
+              Powered By AI Enhancer
             </span>
           </div>
         </Link>
