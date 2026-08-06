@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { put } from '@vercel/blob';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -16,33 +17,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: false, message: 'File tidak ditemukan' }, { status: 400 });
     }
 
-    // === Step 1: Upload ke tmpfiles.org untuk dapat URL publik sementara ===
-    const uploadForm = new FormData();
-    uploadForm.append('file', file);
-
-    const uploadRes = await fetch('https://tmpfiles.org/api/v1/upload', {
-      method: 'POST',
-      body: uploadForm,
+    // === Step 1: Upload ke Vercel Blob dari SERVER (bukan client) ===
+    // Token BLOB_READ_WRITE_TOKEN dibaca otomatis dari env di server
+    const blob = await put(`novapixel/${Date.now()}-${file.name}`, file, {
+      access: 'public',
+      addRandomSuffix: true,
     });
 
-    if (!uploadRes.ok) {
-      return NextResponse.json({ status: false, message: 'Gagal upload file ke server sementara' }, { status: 502 });
+    if (!blob.url) {
+      return NextResponse.json({ status: false, message: 'Upload gagal, tidak ada URL' }, { status: 502 });
     }
 
-    const uploadData = await uploadRes.json();
-    const tmpUrl: string | undefined = uploadData?.data?.url;
-
-    if (!tmpUrl) {
-      return NextResponse.json({ status: false, message: 'URL sementara tidak tersedia' }, { status: 502 });
-    }
-
-    // tmpfiles.org: https://tmpfiles.org/12345/img.jpg → direct: https://tmpfiles.org/dl/12345/img.jpg
-    const directUrl = tmpUrl.replace('https://tmpfiles.org/', 'https://tmpfiles.org/dl/');
-
-    // === Step 2: Kirim URL ke kyzzz AI API ===
+    // === Step 2: Kirim URL Blob ke kyzzz AI API ===
     const endpoint = type === 'video'
-      ? `${API_BASE}/upscale-vid?apikey=${API_KEY}&url=${encodeURIComponent(directUrl)}`
-      : `${API_BASE}/upscale?apikey=${API_KEY}&url=${encodeURIComponent(directUrl)}`;
+      ? `${API_BASE}/upscale-vid?apikey=${API_KEY}&url=${encodeURIComponent(blob.url)}`
+      : `${API_BASE}/upscale?apikey=${API_KEY}&url=${encodeURIComponent(blob.url)}`;
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 110000);
@@ -67,7 +56,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       status: true,
       result: resultUrl,
-      original: directUrl,
+      original: blob.url,
     });
 
   } catch (err: any) {
