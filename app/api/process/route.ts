@@ -5,6 +5,30 @@ export const maxDuration = 120;
 
 const API_KEY = 'kyzz5369077165784';
 const API_BASE = 'https://api.kyzzz.xyz/api/tools';
+const IMGBB_KEY = '1771bef0a804415dcb82b2b9d9dc5034';
+
+async function uploadToImgBB(file: File): Promise<string> {
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const base64 = buffer.toString('base64');
+
+  const body = new URLSearchParams();
+  body.append('key', IMGBB_KEY);
+  body.append('image', base64);
+  body.append('expiration', '3600');
+
+  const res = await fetch('https://api.imgbb.com/1/upload', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: body.toString(),
+  });
+
+  if (!res.ok) throw new Error(`ImgBB upload gagal: ${res.status}`);
+
+  const data = await res.json();
+  const url = data?.data?.url;
+  if (!url) throw new Error('ImgBB tidak mengembalikan URL');
+  return url;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,26 +40,25 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: false, message: 'File tidak ditemukan' }, { status: 400 });
     }
 
-    // Upload ke Catbox.moe — free, no signup, public URL, support image & video
-    const catboxForm = new FormData();
-    catboxForm.append('reqtype', 'fileupload');
-    catboxForm.append('userhash', '');
-    catboxForm.append('fileToUpload', file);
+    let publicUrl: string;
 
-    const catboxRes = await fetch('https://catbox.moe/user/api.php', {
-      method: 'POST',
-      body: catboxForm,
-    });
+    if (type === 'video') {
+      const videoForm = new FormData();
+      videoForm.append('file', file);
 
-    if (!catboxRes.ok) {
-      throw new Error(`Upload gagal: ${catboxRes.status}`);
-    }
+      const res = await fetch('https://file.io/?expires=1h', {
+        method: 'POST',
+        body: videoForm,
+      });
 
-    // Catbox return plain text URL langsung
-    const publicUrl = (await catboxRes.text()).trim();
+      if (!res.ok) throw new Error(`Upload video gagal: ${res.status}`);
 
-    if (!publicUrl || !publicUrl.startsWith('http')) {
-      throw new Error('URL publik tidak valid dari server upload');
+      const data = await res.json();
+      publicUrl = data?.link;
+      if (!publicUrl) throw new Error('URL video tidak tersedia');
+
+    } else {
+      publicUrl = await uploadToImgBB(file);
     }
 
     const endpoint = type === 'video'
@@ -48,16 +71,12 @@ export async function POST(req: NextRequest) {
     const aiRes = await fetch(endpoint, { signal: controller.signal });
     clearTimeout(timeoutId);
 
-    if (!aiRes.ok) {
-      throw new Error(`AI API error: ${aiRes.status}`);
-    }
+    if (!aiRes.ok) throw new Error(`AI API error: ${aiRes.status}`);
 
     const aiData = await aiRes.json();
     const resultUrl = aiData.data || aiData.result || aiData.url;
 
-    if (!resultUrl) {
-      throw new Error(aiData.message || 'AI tidak mengembalikan hasil');
-    }
+    if (!resultUrl) throw new Error(aiData.message || 'AI tidak mengembalikan hasil');
 
     return NextResponse.json({ status: true, result: resultUrl });
 
