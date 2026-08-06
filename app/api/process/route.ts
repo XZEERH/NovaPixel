@@ -16,23 +16,26 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: false, message: 'File tidak ditemukan' }, { status: 400 });
     }
 
-    const uploadForm = new FormData();
-    uploadForm.append('file', file);
+    // Upload ke Catbox.moe — free, no signup, public URL, support image & video
+    const catboxForm = new FormData();
+    catboxForm.append('reqtype', 'fileupload');
+    catboxForm.append('userhash', '');
+    catboxForm.append('fileToUpload', file);
 
-    const uploadRes = await fetch('https://file.io/?expires=1h', {
+    const catboxRes = await fetch('https://catbox.moe/user/api.php', {
       method: 'POST',
-      body: uploadForm,
+      body: catboxForm,
     });
 
-    if (!uploadRes.ok) {
-      throw new Error('Gagal upload ke server sementara');
+    if (!catboxRes.ok) {
+      throw new Error(`Upload gagal: ${catboxRes.status}`);
     }
 
-    const uploadData = await uploadRes.json();
-    const publicUrl: string | undefined = uploadData?.link;
+    // Catbox return plain text URL langsung
+    const publicUrl = (await catboxRes.text()).trim();
 
-    if (!publicUrl) {
-      throw new Error('URL publik tidak tersedia');
+    if (!publicUrl || !publicUrl.startsWith('http')) {
+      throw new Error('URL publik tidak valid dari server upload');
     }
 
     const endpoint = type === 'video'
@@ -62,7 +65,9 @@ export async function POST(req: NextRequest) {
     const isTimeout = err.name === 'AbortError';
     return NextResponse.json({
       status: false,
-      message: isTimeout ? 'Timeout. Coba file lebih kecil.' : err.message || 'Terjadi kesalahan server',
+      message: isTimeout
+        ? 'Timeout. Coba file lebih kecil.'
+        : err.message || 'Terjadi kesalahan server',
     }, { status: 500 });
   }
 }
