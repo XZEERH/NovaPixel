@@ -21,11 +21,11 @@ export const useEnhancer = (type: 'image' | 'video') => {
       setErrorMessage(null);
       setResultUrl(null);
 
-      // Preview lokal langsung (tidak perlu tunggu upload)
+      // Preview lokal langsung — tidak perlu tunggu upload
       const localPreview = URL.createObjectURL(file);
       setOriginalUrl(localPreview);
 
-      // === FASE 1: Upload file ===
+      // === FASE 1: Upload ===
       setStatus('uploading');
 
       const formData = new FormData();
@@ -34,14 +34,15 @@ export const useEnhancer = (type: 'image' | 'video') => {
 
       // === FASE 2: Preparing ===
       setStatus('preparing');
+      await new Promise(r => setTimeout(r, 300));
 
-      // === FASE 3: Enhancing — kirim ke /api/process ===
+      // === FASE 3: Enhancing — semua proses di server /api/process ===
       setStatus('enhancing');
 
       const res = await fetch('/api/process', {
         method: 'POST',
         body: formData,
-        // Tidak set Content-Type — biarkan browser set boundary FormData otomatis
+        // Jangan set Content-Type — biarkan browser isi boundary FormData otomatis
       });
 
       if (!res.ok) {
@@ -55,7 +56,13 @@ export const useEnhancer = (type: 'image' | 'video') => {
         throw new Error(data.message || 'AI tidak mengembalikan hasil');
       }
 
-      // === FASE 4: Selesai ===
+      // Pakai URL original dari server jika ada (Vercel Blob URL)
+      if (data.original) {
+        URL.revokeObjectURL(localPreview);
+        setOriginalUrl(data.original);
+      }
+
+      // === FASE 4: Rendering ===
       setStatus('rendering');
       await new Promise(r => setTimeout(r, 400));
 
