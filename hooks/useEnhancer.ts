@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import { upload } from '@vercel/blob/client';
-import { processMedia } from '@/services/api-service';
 import { ProcessStatus } from '@/types/global';
 
 export const useEnhancer = (type: 'image' | 'video') => {
@@ -23,32 +21,45 @@ export const useEnhancer = (type: 'image' | 'video') => {
       setErrorMessage(null);
       setResultUrl(null);
 
-      // === FASE 1: Upload ke Vercel Blob ===
+      // Preview lokal langsung (tidak perlu tunggu upload)
+      const localPreview = URL.createObjectURL(file);
+      setOriginalUrl(localPreview);
+
+      // === FASE 1: Upload file ===
       setStatus('uploading');
-      const blob = await upload(file.name, file, {
-        access: 'public',
-        handleUploadUrl: '/api/upload',
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('type', type);
+
+      // === FASE 2: Preparing ===
+      setStatus('preparing');
+
+      // === FASE 3: Enhancing — kirim ke /api/process ===
+      setStatus('enhancing');
+
+      const res = await fetch('/api/process', {
+        method: 'POST',
+        body: formData,
+        // Tidak set Content-Type — biarkan browser set boundary FormData otomatis
       });
 
-      if (!blob.url) throw new Error('Upload gagal — tidak ada URL yang dikembalikan');
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.message || `Server error: ${res.status}`);
+      }
 
-      setOriginalUrl(blob.url);
+      const data = await res.json();
 
-      // === FASE 2: Preparing (singkat) ===
-      setStatus('preparing');
-      await new Promise(r => setTimeout(r, 600));
+      if (!data.status || !data.result) {
+        throw new Error(data.message || 'AI tidak mengembalikan hasil');
+      }
 
-      // === FASE 3: Enhancing (proses utama AI) ===
-      setStatus('enhancing');
-      const enhanced = await processMedia(blob.url, type);
-
-      if (!enhanced) throw new Error('AI tidak mengembalikan hasil');
-
-      // === FASE 4: Rendering selesai ===
+      // === FASE 4: Selesai ===
       setStatus('rendering');
       await new Promise(r => setTimeout(r, 400));
 
-      setResultUrl(enhanced);
+      setResultUrl(data.result);
       setStatus('completed');
 
     } catch (error: any) {
