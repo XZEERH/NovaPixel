@@ -10,10 +10,10 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "api.kyzzz.xyz" },
+      { protocol: "https", hostname: "tmpfiles.org" },
       { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
     ],
   },
-  // Izinkan edge functions berjalan lebih lama
   experimental: {
     serverActions: {
       bodySizeLimit: '50mb',
