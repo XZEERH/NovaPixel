@@ -30,6 +30,32 @@ async function uploadToImgBB(file: File): Promise<string> {
   return url;
 }
 
+async function callKyzzzAPI(endpoint: string, publicUrl: string): Promise<string> {
+  // Coba GET dulu
+  const getRes = await fetch(`${endpoint}&url=${encodeURIComponent(publicUrl)}`);
+
+  if (getRes.status === 405) {
+    // Fallback ke POST jika GET ditolak
+    const postRes = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: publicUrl }),
+    });
+
+    if (!postRes.ok) throw new Error(`AI API error: ${postRes.status}`);
+    const postData = await postRes.json();
+    const result = postData.data || postData.result || postData.url;
+    if (!result) throw new Error(postData.message || 'AI tidak mengembalikan hasil');
+    return result;
+  }
+
+  if (!getRes.ok) throw new Error(`AI API error: ${getRes.status}`);
+  const getData = await getRes.json();
+  const result = getData.data || getData.result || getData.url;
+  if (!result) throw new Error(getData.message || 'AI tidak mengembalikan hasil');
+  return result;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -40,43 +66,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: false, message: 'File tidak ditemukan' }, { status: 400 });
     }
 
-    let publicUrl: string;
-
-    if (type === 'video') {
-      const videoForm = new FormData();
-      videoForm.append('file', file);
-
-      const res = await fetch('https://file.io/?expires=1h', {
-        method: 'POST',
-        body: videoForm,
-      });
-
-      if (!res.ok) throw new Error(`Upload video gagal: ${res.status}`);
-
-      const data = await res.json();
-      publicUrl = data?.link;
-      if (!publicUrl) throw new Error('URL video tidak tersedia');
-
-    } else {
-      publicUrl = await uploadToImgBB(file);
-    }
+    const publicUrl = await uploadToImgBB(file);
 
     const endpoint = type === 'video'
-      ? `${API_BASE}/upscale-vid?apikey=${API_KEY}&url=${encodeURIComponent(publicUrl)}`
-      : `${API_BASE}/upscale?apikey=${API_KEY}&url=${encodeURIComponent(publicUrl)}`;
+      ? `${API_BASE}/upscale-vid?apikey=${API_KEY}`
+      : `${API_BASE}/upscale?apikey=${API_KEY}`;
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 110000);
-
-    const aiRes = await fetch(endpoint, { signal: controller.signal });
-    clearTimeout(timeoutId);
-
-    if (!aiRes.ok) throw new Error(`AI API error: ${aiRes.status}`);
-
-    const aiData = await aiRes.json();
-    const resultUrl = aiData.data || aiData.result || aiData.url;
-
-    if (!resultUrl) throw new Error(aiData.message || 'AI tidak mengembalikan hasil');
+    const resultUrl = await callKyzzzAPI(endpoint, publicUrl);
 
     return NextResponse.json({ status: true, result: resultUrl });
 
