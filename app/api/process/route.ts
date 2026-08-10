@@ -5,56 +5,6 @@ export const maxDuration = 120;
 
 const API_KEY = 'kyzz5369077165784';
 const API_BASE = 'https://api.kyzzz.xyz/api/tools';
-const IMGBB_KEY = '1771bef0a804415dcb82b2b9d9dc5034';
-
-async function uploadToImgBB(file: File): Promise<string> {
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const base64 = buffer.toString('base64');
-
-  const body = new URLSearchParams();
-  body.append('key', IMGBB_KEY);
-  body.append('image', base64);
-  body.append('expiration', '3600');
-
-  const res = await fetch('https://api.imgbb.com/1/upload', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: body.toString(),
-  });
-
-  if (!res.ok) throw new Error(`ImgBB upload gagal: ${res.status}`);
-
-  const data = await res.json();
-  const url = data?.data?.url;
-  if (!url) throw new Error('ImgBB tidak mengembalikan URL');
-  return url;
-}
-
-async function callKyzzzAPI(endpoint: string, publicUrl: string): Promise<string> {
-  // Coba GET dulu
-  const getRes = await fetch(`${endpoint}&url=${encodeURIComponent(publicUrl)}`);
-
-  if (getRes.status === 405) {
-    // Fallback ke POST jika GET ditolak
-    const postRes = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: publicUrl }),
-    });
-
-    if (!postRes.ok) throw new Error(`AI API error: ${postRes.status}`);
-    const postData = await postRes.json();
-    const result = postData.data || postData.result || postData.url;
-    if (!result) throw new Error(postData.message || 'AI tidak mengembalikan hasil');
-    return result;
-  }
-
-  if (!getRes.ok) throw new Error(`AI API error: ${getRes.status}`);
-  const getData = await getRes.json();
-  const result = getData.data || getData.result || getData.url;
-  if (!result) throw new Error(getData.message || 'AI tidak mengembalikan hasil');
-  return result;
-}
 
 export async function POST(req: NextRequest) {
   try {
@@ -66,15 +16,59 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: false, message: 'File tidak ditemukan' }, { status: 400 });
     }
 
-    const publicUrl = await uploadToImgBB(file);
+    // Kirim file langsung ke kyzzz via POST multipart (sesuai curl docs)
+    const kyzzzForm = new FormData();
+    kyzzzForm.append('image', file, file.name);
+    kyzzzForm.append('url', '');
 
     const endpoint = type === 'video'
       ? `${API_BASE}/upscale-vid?apikey=${API_KEY}`
       : `${API_BASE}/upscale?apikey=${API_KEY}`;
 
-    const resultUrl = await callKyzzzAPI(endpoint, publicUrl);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 110000);
 
-    return NextResponse.json({ status: true, result: resultUrl });
+    const aiRes = await fetch(endpoint, {
+      method: 'POST',
+      body: kyzzzForm,
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!aiRes.ok) {
+      const errText = await aiRes.text().catch(() => '');
+      throw new Error(`AI API error: ${aiRes.status} - ${errText.slice(0, 100)}`);
+    }
+
+    const contentType = aiRes.headers.get('content-type') || '';
+
+    // Response JSON (URL hasil)
+    if (contentType.includes('application/json')) {
+      const aiData = await aiRes.json();
+      const resultUrl = aiData.data || aiData.result || aiData.url;
+      if (!resultUrl) throw new Error(aiData.message || 'AI tidak mengembalikan hasil');
+      return NextResponse.json({ status: true, result: resultUrl });
+    }
+
+    // Response binary image/video langsung
+    if (contentType.includes('image/') || contentType.includes('video/')) {
+      const buffer = Buffer.from(await aiRes.arrayBuffer());
+      const base64 = buffer.toString('base64');
+      const dataUrl = `data:${contentType};base64,${base64}`;
+      return NextResponse.json({ status: true, result: dataUrl });
+    }
+
+    // Fallback parse text
+    const text = await aiRes.text();
+    try {
+      const parsed = JSON.parse(text);
+      const resultUrl = parsed.data || parsed.result || parsed.url;
+      if (!resultUrl) throw new Error(parsed.message || 'Format response tidak dikenal');
+      return NextResponse.json({ status: true, result: resultUrl });
+    } catch {
+      throw new Error(`Response tidak valid: ${text.slice(0, 150)}`);
+    }
 
   } catch (err: any) {
     const isTimeout = err.name === 'AbortError';
