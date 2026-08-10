@@ -9,8 +9,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk" });
 
 export const metadata: Metadata = {
-  title: "NovaPixel | Neon Brutalism AI Enhancer",
-  description: "Enhance every pixel with a premium neon brutalism experience.",
+  title: "NovaPixel | AI Upscale Enhancer",
+  description: "Enhance The Quality Of Your Images And Video With AI NovaPixel X API Kyuu.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
