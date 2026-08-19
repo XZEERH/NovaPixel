@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 export const maxDuration = 120;
 
-const API_KEY = 'kyzz5369077165784';
-const API_BASE = 'https://api.kyzzz.xyz/api/tools';
+const KYZZZ_KEY = 'kyzz5369077165784';
+const IMGBB_KEY = '1771bef0a804415dcb82b2b9d9dc5034';
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,58 +16,95 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: false, message: 'File tidak ditemukan' }, { status: 400 });
     }
 
-    // Kirim file langsung ke kyzzz via POST multipart (sesuai curl docs)
-    const kyzzzForm = new FormData();
-    kyzzzForm.append('image', file, file.name);
-    kyzzzForm.append('url', '');
+    if (type === 'video') {
+      // VIDEO: Upload ke ImgBB dulu → kirim URL ke kyzzz upscale-vid
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const base64 = buffer.toString('base64');
 
-    const endpoint = type === 'video'
-      ? `${API_BASE}/upscale-vid?apikey=${API_KEY}`
-      : `${API_BASE}/upscale?apikey=${API_KEY}`;
+      const imgbbBody = new URLSearchParams();
+      imgbbBody.append('key', IMGBB_KEY);
+      imgbbBody.append('image', base64);
+      imgbbBody.append('expiration', '3600');
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 110000);
+      const imgbbRes = await fetch('https://api.imgbb.com/1/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: imgbbBody.toString(),
+      });
 
-    const aiRes = await fetch(endpoint, {
-      method: 'POST',
-      body: kyzzzForm,
-      signal: controller.signal,
-    });
+      if (!imgbbRes.ok) throw new Error(`Upload video gagal: ${imgbbRes.status}`);
 
-    clearTimeout(timeoutId);
+      const imgbbData = await imgbbRes.json();
+      const videoUrl = imgbbData?.data?.url;
+      if (!videoUrl) throw new Error('URL video tidak tersedia');
 
-    if (!aiRes.ok) {
-      const errText = await aiRes.text().catch(() => '');
-      throw new Error(`AI API error: ${aiRes.status} - ${errText.slice(0, 100)}`);
-    }
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 110000);
 
-    const contentType = aiRes.headers.get('content-type') || '';
+      const aiRes = await fetch(
+        `https://api.kyzzz.xyz/api/tools/upscale-vid?apikey=${KYZZZ_KEY}&url=${encodeURIComponent(videoUrl)}`,
+        { signal: controller.signal }
+      );
+      clearTimeout(timeoutId);
 
-    // Response JSON (URL hasil)
-    if (contentType.includes('application/json')) {
+      if (!aiRes.ok) throw new Error(`AI API error: ${aiRes.status}`);
+
       const aiData = await aiRes.json();
       const resultUrl = aiData.data || aiData.result || aiData.url;
       if (!resultUrl) throw new Error(aiData.message || 'AI tidak mengembalikan hasil');
-      return NextResponse.json({ status: true, result: resultUrl });
-    }
 
-    // Response binary image/video langsung
-    if (contentType.includes('image/') || contentType.includes('video/')) {
-      const buffer = Buffer.from(await aiRes.arrayBuffer());
-      const base64 = buffer.toString('base64');
-      const dataUrl = `data:${contentType};base64,${base64}`;
-      return NextResponse.json({ status: true, result: dataUrl });
-    }
-
-    // Fallback parse text
-    const text = await aiRes.text();
-    try {
-      const parsed = JSON.parse(text);
-      const resultUrl = parsed.data || parsed.result || parsed.url;
-      if (!resultUrl) throw new Error(parsed.message || 'Format response tidak dikenal');
       return NextResponse.json({ status: true, result: resultUrl });
-    } catch {
-      throw new Error(`Response tidak valid: ${text.slice(0, 150)}`);
+
+    } else {
+      // IMAGE: Kirim file langsung ke kyzzz upscale-image/v2 via multipart
+      const kyzzzForm = new FormData();
+      kyzzzForm.append('file', file, file.name);
+      kyzzzForm.append('resolusiupscale', '4k');
+      kyzzzForm.append('factor', '4');
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 110000);
+
+      const aiRes = await fetch(
+        `https://api.kyzzz.xyz/api/tools/upscale-image/v2?apikey=${KYZZZ_KEY}`,
+        {
+          method: 'POST',
+          body: kyzzzForm,
+          signal: controller.signal,
+        }
+      );
+      clearTimeout(timeoutId);
+
+      if (!aiRes.ok) {
+        const errText = await aiRes.text().catch(() => '');
+        throw new Error(`AI API error: ${aiRes.status} - ${errText.slice(0, 150)}`);
+      }
+
+      const contentType = aiRes.headers.get('content-type') || '';
+
+      if (contentType.includes('application/json')) {
+        const aiData = await aiRes.json();
+        const resultUrl = aiData.data || aiData.result || aiData.url;
+        if (!resultUrl) throw new Error(aiData.message || 'AI tidak mengembalikan hasil');
+        return NextResponse.json({ status: true, result: resultUrl });
+      }
+
+      if (contentType.includes('image/')) {
+        const buffer = Buffer.from(await aiRes.arrayBuffer());
+        const base64 = buffer.toString('base64');
+        const dataUrl = `data:${contentType};base64,${base64}`;
+        return NextResponse.json({ status: true, result: dataUrl });
+      }
+
+      const text = await aiRes.text();
+      try {
+        const parsed = JSON.parse(text);
+        const resultUrl = parsed.data || parsed.result || parsed.url;
+        if (!resultUrl) throw new Error(parsed.message || 'Format response tidak dikenal');
+        return NextResponse.json({ status: true, result: resultUrl });
+      } catch {
+        throw new Error(`Response tidak valid: ${text.slice(0, 150)}`);
+      }
     }
 
   } catch (err: any) {
@@ -75,7 +112,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       status: false,
       message: isTimeout
-        ? 'Timeout. Coba file lebih kecil.'
+        ? 'Timeout. Coba file ukuran lebih kecil.'
         : err.message || 'Terjadi kesalahan server',
     }, { status: 500 });
   }
