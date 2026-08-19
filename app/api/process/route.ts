@@ -6,6 +6,13 @@ export const maxDuration = 120;
 const KYZZZ_KEY = 'kyzz5369077165784';
 const IMGBB_KEY = '1771bef0a804415dcb82b2b9d9dc5034';
 
+// API image upscaler pengganti kyzzz (kyzzz sering down).
+// Endpoint & apikey sesuai hasil test di tool "THERE SA" yang dikirim user.
+// Kalau endpoint ini ternyata salah/berubah, cukup ganti nilai di sini saja.
+const THERESAV_KEY = 'luZ0Z';
+const THERESAV_ENDPOINT = 'https://api.theresav.biz.id/tools/hd';
+const THERESAV_DEFAULT_SCALE = '4';
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -56,23 +63,23 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: true, result: resultUrl });
 
     } else {
-      // IMAGE: Kirim file langsung ke kyzzz upscale-image/v2 via multipart
-      const kyzzzForm = new FormData();
-      kyzzzForm.append('file', file, file.name);
-      kyzzzForm.append('resolusiupscale', '4k');
-      kyzzzForm.append('factor', '4');
+      // IMAGE: Kirim file langsung ke theresav /tools/hd via multipart (pengganti kyzzz)
+      // scale bisa dikirim dari client (untuk fitur retry scale nanti), default '4'
+      const scale = (formData.get('scale') as string) || THERESAV_DEFAULT_SCALE;
+
+      const theresavForm = new FormData();
+      theresavForm.append('scale', scale);
+      theresavForm.append('apikey', THERESAV_KEY);
+      theresavForm.append('image', file, file.name);
 
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 110000);
 
-      const aiRes = await fetch(
-        `https://api.kyzzz.xyz/api/tools/upscale-image/v2?apikey=${KYZZZ_KEY}`,
-        {
-          method: 'POST',
-          body: kyzzzForm,
-          signal: controller.signal,
-        }
-      );
+      const aiRes = await fetch(THERESAV_ENDPOINT, {
+        method: 'POST',
+        body: theresavForm,
+        signal: controller.signal,
+      });
       clearTimeout(timeoutId);
 
       if (!aiRes.ok) {
@@ -84,7 +91,8 @@ export async function POST(req: NextRequest) {
 
       if (contentType.includes('application/json')) {
         const aiData = await aiRes.json();
-        const resultUrl = aiData.data || aiData.result || aiData.url;
+        const resultUrl =
+          aiData.data || aiData.result || aiData.url || aiData.output || aiData.image || aiData.link;
         if (!resultUrl) throw new Error(aiData.message || 'AI tidak mengembalikan hasil');
         return NextResponse.json({ status: true, result: resultUrl });
       }
@@ -99,7 +107,8 @@ export async function POST(req: NextRequest) {
       const text = await aiRes.text();
       try {
         const parsed = JSON.parse(text);
-        const resultUrl = parsed.data || parsed.result || parsed.url;
+        const resultUrl =
+          parsed.data || parsed.result || parsed.url || parsed.output || parsed.image || parsed.link;
         if (!resultUrl) throw new Error(parsed.message || 'Format response tidak dikenal');
         return NextResponse.json({ status: true, result: resultUrl });
       } catch {
