@@ -4,8 +4,7 @@ import { ProcessStatus, StepDetail } from "@/types/global";
  * Endpoint API External NovaPixel
  */
 export const API_ENDPOINTS = {
-  // Dibetulkan: endpoint lama "/upscale" tidak sesuai docs resmi kyzzz
-  IMAGE_HD: 'https://api.kyzzz.xyz/api/tools/upscale-image/v2?apikey=kyzz5369077165784',
+  IMAGE_HD: 'https://api.kyzzz.xyz/api/tools/upscale?apikey=kyzz5369077165784',
   VIDEO_HD: 'https://api.kyzzz.xyz/api/tools/upscale-vid?apikey=kyzz5369077165784',
 };
 
