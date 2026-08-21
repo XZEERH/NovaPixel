@@ -6,7 +6,7 @@ export const maxDuration = 120;
 const KYZZZ_KEY = 'kyzz5369077165784';
 const IMGBB_KEY = '1771bef0a804415dcb82b2b9d9dc5034';
 
-// API image upscaler pengganti kyzzz yaitu theresav (kyzzz sering down).
+// API image upscaler pengganti kyzzz yaitu theresav (kyzzz sering down jir).
 const THERESAV_KEY = 'luZ0Z';
 const THERESAV_ENDPOINT = 'https://api.theresav.biz.id/tools/hd';
 const THERESAV_DEFAULT_SCALE = '4';
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
 
     } else {
       // IMAGE: Kirim file langsung ke theresav /tools/hd via multipart (pengganti kyzzz)
-      // scale bisa dikirim dari client (untuk fitur retry scale nanti), default '4'
+      // scale coming soon, mager update (untuk update fitur retry scale nanti), default '4'
       const scale = (formData.get('scale') as string) || THERESAV_DEFAULT_SCALE;
 
       const theresavForm = new FormData();
