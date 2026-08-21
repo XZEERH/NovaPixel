@@ -9,7 +9,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       body,
       request,
       onBeforeGenerateToken: async (pathname) => {
-        // Di sini Anda bisa membatasi siapa yang boleh upload
+        
         return {
           allowedContentTypes: [
             'image/jpeg', 'image/png', 'image/webp', 
