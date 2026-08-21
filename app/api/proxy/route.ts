@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
 
     const data = await response.json();
 
-    // Kyzzz API response: { status: true, data: "<url>" } atau { result: "<url>" }
+    // Theresav API response: { status: true, data: "<url>" } atau { result: "<url>" }
     const finalUrl = data.data || data.result || data.url;
 
     if (!finalUrl) {
