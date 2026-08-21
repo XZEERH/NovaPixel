@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (type === 'video') {
-      // VIDEO: Upload ke ImgBB dulu → kirim URL ke kyzzz upscale-vid
+      
       const buffer = Buffer.from(await file.arrayBuffer());
       const base64 = buffer.toString('base64');
 
