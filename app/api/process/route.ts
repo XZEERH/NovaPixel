@@ -6,9 +6,7 @@ export const maxDuration = 120;
 const KYZZZ_KEY = 'kyzz5369077165784';
 const IMGBB_KEY = '1771bef0a804415dcb82b2b9d9dc5034';
 
-// API image upscaler pengganti kyzzz (kyzzz sering down).
-// Endpoint & apikey sesuai hasil test di tool "THERE SA" yang dikirim user.
-// Kalau endpoint ini ternyata salah/berubah, cukup ganti nilai di sini saja.
+// API image upscaler pengganti kyzzz yaitu theresav (kyzzz sering down).
 const THERESAV_KEY = 'luZ0Z';
 const THERESAV_ENDPOINT = 'https://api.theresav.biz.id/tools/hd';
 const THERESAV_DEFAULT_SCALE = '4';
