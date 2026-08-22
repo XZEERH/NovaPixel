@@ -7,8 +7,8 @@ const KYZZZ_KEY = 'kyzz5369077165784';
 const IMGBB_KEY = '1771bef0a804415dcb82b2b9d9dc5034';
 
 // API image upscaler pengganti kyzzz yaitu theresav (kyzzz sering down jir).
-const THERESAV_KEY = 'luZ0Z';
-const THERESAV_ENDPOINT = 'https://api.theresav.biz.id/tools/hd';
+const THERESAV_KEY = 'fM0yn';
+const THERESAV_ENDPOINT = 'https://api.theresav.eu/api/tools/hd';
 const THERESAV_DEFAULT_SCALE = '4';
 
 export async function POST(req: NextRequest) {
